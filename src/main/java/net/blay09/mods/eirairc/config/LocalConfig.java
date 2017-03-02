@@ -18,7 +18,7 @@ public class LocalConfig {
     public static final ConfigProperty<Boolean> disableWelcomeScreen = new ConfigProperty<>(manager, GENERAL, "disableWelcomeScreen", false);
 
     public static void load(File configDir, boolean reloadFile) {
-        if(thisConfig == null || reloadFile) {
+        if (thisConfig == null || reloadFile) {
             thisConfig = new Configuration(new File(configDir, "local.cfg"));
             manager.setParentConfig(thisConfig);
         }

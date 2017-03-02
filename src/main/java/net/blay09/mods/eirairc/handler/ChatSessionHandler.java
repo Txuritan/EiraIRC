@@ -52,7 +52,7 @@ public class ChatSessionHandler {
             targetUserIdx = validTargetUsers.indexOf(chatTarget);
         }
     }
-
+    
     public IRCContext getChatTarget() {
         return chatTarget;
     }

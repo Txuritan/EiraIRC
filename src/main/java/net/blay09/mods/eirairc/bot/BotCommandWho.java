@@ -11,44 +11,44 @@ import net.blay09.mods.eirairc.util.Utils;
 
 public class BotCommandWho implements IBotCommand {
 
-	public BotCommandWho() {
-	}
-	
-	@Override
-	public String getCommandName() {
-		return "who";
-	}
+    public BotCommandWho() {
+    }
 
-	@Override
-	public boolean isChannelCommand() {
-		return true;
-	}
+    @Override
+    public String getCommandName() {
+        return "who";
+    }
 
-	@Override
-	public void processCommand(IRCBot bot, IRCChannel channel, IRCUser user, String[] args, IBotCommand commandSettings) {
-		if(commandSettings.broadcastsResult()) {
-			Utils.sendPlayerList(channel);
-		}
-	}
+    @Override
+    public boolean isChannelCommand() {
+        return true;
+    }
 
-	@Override
-	public boolean requiresAuth() {
-		return false;
-	}
+    @Override
+    public void processCommand(IRCBot bot, IRCChannel channel, IRCUser user, String[] args, IBotCommand commandSettings) {
+        if (commandSettings.broadcastsResult()) {
+            Utils.sendPlayerList(channel);
+        }
+    }
 
-	@Override
-	public boolean broadcastsResult() {
-		return true;
-	}
+    @Override
+    public boolean requiresAuth() {
+        return false;
+    }
 
-	@Override
-	public boolean allowArgs() {
-		return false;
-	}
+    @Override
+    public boolean broadcastsResult() {
+        return true;
+    }
 
-	@Override
-	public String getCommandDescription() {
-		return "Prints out a list of all players online.";
-	}
-	
+    @Override
+    public boolean allowArgs() {
+        return false;
+    }
+
+    @Override
+    public String getCommandDescription() {
+        return "Prints out a list of all players online.";
+    }
+
 }

@@ -8,27 +8,27 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 public class MessageHello implements IMessage {
 
-	private String version;
-	
-	public MessageHello() {
-	}
-	
-	public MessageHello(String version) {
-		this.version = version;
-	}
+    private String version;
 
-	@Override
-	public void fromBytes(ByteBuf buf) {
-		version = ByteBufUtils.readUTF8String(buf);
-	}
+    public MessageHello() {
+    }
 
-	@Override
-	public void toBytes(ByteBuf buf) {
-		ByteBufUtils.writeUTF8String(buf, version);
-	}
+    public MessageHello(String version) {
+        this.version = version;
+    }
 
-	public String getVersion() {
-		return version;
-	}
+    @Override
+    public void fromBytes(ByteBuf buf) {
+        version = ByteBufUtils.readUTF8String(buf);
+    }
+
+    @Override
+    public void toBytes(ByteBuf buf) {
+        ByteBufUtils.writeUTF8String(buf, version);
+    }
+
+    public String getVersion() {
+        return version;
+    }
 
 }

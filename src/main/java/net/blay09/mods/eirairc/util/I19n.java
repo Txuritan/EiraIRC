@@ -2,12 +2,12 @@
 
 package net.blay09.mods.eirairc.util;
 
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 
 public class I19n {
-	
-	public static String format(String key, Object... params) {
-		return StatCollector.translateToLocalFormatted(key, params);
-	}
+
+    public static String format(String key, Object... params) {
+        return I18n.translateToLocalFormatted(key, params);
+    }
 
 }

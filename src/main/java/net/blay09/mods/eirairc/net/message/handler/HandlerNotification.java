@@ -11,10 +11,10 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class HandlerNotification implements IMessageHandler<MessageNotification, IMessage> {
 
-	@Override
-	public IMessage onMessage(MessageNotification message, MessageContext ctx) {
-		EiraIRC.proxy.addScheduledTask(() -> EiraIRC.proxy.publishNotification(NotificationType.fromId(message.getNotificationType()), message.getText()));
-		return null;
-	}
+    @Override
+    public IMessage onMessage(MessageNotification message, MessageContext ctx) {
+        EiraIRC.proxy.addScheduledTask(() -> EiraIRC.proxy.publishNotification(NotificationType.fromId(message.getNotificationType()), message.getText()));
+        return null;
+    }
 
 }

@@ -8,15 +8,15 @@ import java.net.URL;
 
 public class GuiURLImage extends GuiImage {
 
-	private final URL url;
+    private final URL url;
 
-	public GuiURLImage(URL url) {
-		this.url = url;
-	}
+    public GuiURLImage(URL url) {
+        this.url = url;
+    }
 
-	@Override
-	public BufferedImage loadImage() throws IOException {
-		return ImageIO.read(url);
-	}
+    @Override
+    public BufferedImage loadImage() throws IOException {
+        return ImageIO.read(url);
+    }
 
 }

@@ -13,99 +13,99 @@ import java.util.Map;
 
 public class IRCChannelImpl implements IRCChannel {
 
-	private IRCConnectionImpl connection;
-	private String name;
-	private String topic;
-	private Map<String, IRCUser> users = Maps.newHashMap();
+    private IRCConnectionImpl connection;
+    private String name;
+    private String topic;
+    private Map<String, IRCUser> users = Maps.newHashMap();
 
-	public IRCChannelImpl(IRCConnectionImpl connection, String name) {
-		this.connection = connection;
-		this.name = name;
-	}
-	
-	public Collection<IRCUser> getUserList() {
-		return users.values();
-	}
+    public IRCChannelImpl(IRCConnectionImpl connection, String name) {
+        this.connection = connection;
+        this.name = name;
+    }
 
-	public IRCUser getUser(String nick) {
-		return users.get(nick.toLowerCase());
-	}
-	
-	public void addUser(IRCUserImpl user) {
-		users.put(user.getName().toLowerCase(), user);
-	}
+    public Collection<IRCUser> getUserList() {
+        return users.values();
+    }
 
-	public void removeUser(IRCUser user) {
-		users.remove(user.getName().toLowerCase());
-	}
+    public IRCUser getUser(String nick) {
+        return users.get(nick.toLowerCase());
+    }
 
-	@Override
-	public void message(String message) {
-		connection.message(name, message);
-	}
-	
-	@Override
-	public void notice(String message) {
-		connection.notice(name, message);
-	}
-	
-	public String getName() {
-		return name;
-	}
+    public void addUser(IRCUserImpl user) {
+        users.put(user.getName().toLowerCase(), user);
+    }
 
-	@Override
-	public ContextType getContextType() {
-		return ContextType.IRCChannel;
-	}
+    public void removeUser(IRCUser user) {
+        users.remove(user.getName().toLowerCase());
+    }
 
-	@Override
-	public boolean hasTopic() {
-		return topic != null;
-	}
-	
-	public void setTopic(String topic) {
-		this.topic = topic;
-	}
+    @Override
+    public void message(String message) {
+        connection.message(name, message);
+    }
 
-	@Override
-	public String getTopic() {
-		return topic;
-	}
+    @Override
+    public void notice(String message) {
+        connection.notice(name, message);
+    }
 
-	public IRCConnectionImpl getConnection() {
-		return connection;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public boolean hasUser(String nick) {
-		return users.containsKey(nick.toLowerCase());
-	}
+    @Override
+    public ContextType getContextType() {
+        return ContextType.IRCChannel;
+    }
 
-	public String getIdentifier() {
-		return connection.getIdentifier() + "/" + name.toLowerCase();
-	}
+    @Override
+    public boolean hasTopic() {
+        return topic != null;
+    }
 
-	@Override
-	public void ctcpMessage(String message) {
-		message(IRCConnectionImpl.CTCP_START + message + IRCConnectionImpl.CTCP_END);
-	}
+    public void setTopic(String topic) {
+        this.topic = topic;
+    }
 
-	@Override
-	public void ctcpNotice(String message) {
-		notice(IRCConnectionImpl.CTCP_START + message + IRCConnectionImpl.CTCP_END);
-	}
+    @Override
+    public String getTopic() {
+        return topic;
+    }
 
-	@Override
-	public IConfigManager getGeneralSettings() {
-		return ConfigHelper.getGeneralSettings(this).manager;
-	}
+    public IRCConnectionImpl getConnection() {
+        return connection;
+    }
 
-	@Override
-	public IConfigManager getBotSettings() {
-		return ConfigHelper.getBotSettings(this).manager;
-	}
+    public boolean hasUser(String nick) {
+        return users.containsKey(nick.toLowerCase());
+    }
 
-	@Override
-	public IConfigManager getThemeSettings() {
-		return ConfigHelper.getTheme(this).manager;
-	}
+    public String getIdentifier() {
+        return connection.getIdentifier() + "/" + name.toLowerCase();
+    }
+
+    @Override
+    public void ctcpMessage(String message) {
+        message(IRCConnectionImpl.CTCP_START + message + IRCConnectionImpl.CTCP_END);
+    }
+
+    @Override
+    public void ctcpNotice(String message) {
+        notice(IRCConnectionImpl.CTCP_START + message + IRCConnectionImpl.CTCP_END);
+    }
+
+    @Override
+    public IConfigManager getGeneralSettings() {
+        return ConfigHelper.getGeneralSettings(this).manager;
+    }
+
+    @Override
+    public IConfigManager getBotSettings() {
+        return ConfigHelper.getBotSettings(this).manager;
+    }
+
+    @Override
+    public IConfigManager getThemeSettings() {
+        return ConfigHelper.getTheme(this).manager;
+    }
 }

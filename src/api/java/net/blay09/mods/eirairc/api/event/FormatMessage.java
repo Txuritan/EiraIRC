@@ -2,7 +2,7 @@
 
 package net.blay09.mods.eirairc.api.event;
 
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 /**
@@ -16,12 +16,12 @@ public class FormatMessage extends Event {
      * The chat component containing the text message that should be checked for emoticons.
      * This component can be changed by anyone handling this event and EiraIRC will continue working with whatever is set here.
      */
-    public IChatComponent component;
+    public ITextComponent component;
 
     /**
      * @param component the chat component containing the text message that should be checked for emoticons
      */
-    public FormatMessage(IChatComponent component) {
+    public FormatMessage(ITextComponent component) {
         this.component = component;
     }
 

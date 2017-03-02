@@ -17,8 +17,8 @@ import net.blay09.mods.eirairc.irc.IRCChannelUserMode;
 import net.blay09.mods.eirairc.irc.IRCConnectionImpl;
 import net.blay09.mods.eirairc.irc.IRCUserImpl;
 import net.blay09.mods.eirairc.util.*;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import org.apache.logging.log4j.LogManager;
@@ -176,7 +176,7 @@ public class IRCEventHandler {
                 } else {
                     format = botSettings.getMessageFormat().mcPrivateMessage;
                 }
-                IChatComponent chatComponent = MessageFormat.formatChatComponent(format, connection, null, sender, message, MessageFormat.Target.Minecraft, (isEmote ? MessageFormat.Mode.Emote : MessageFormat.Mode.Message));
+                ITextComponent chatComponent = MessageFormat.formatChatComponent(format, connection, null, sender, message, MessageFormat.Target.Minecraft, (isEmote ? MessageFormat.Mode.Emote : MessageFormat.Mode.Message));
                 if (event.isNotice && botSettings.hideNotices.get()) {
                     logger.info(chatComponent.getUnformattedText());
                     return;
@@ -190,13 +190,13 @@ public class IRCEventHandler {
                 }
                 EiraIRC.instance.getChatSessionHandler().addTargetUser(sender);
                 ThemeSettings theme = ConfigHelper.getTheme(sender);
-                EnumChatFormatting emoteColor = theme.emoteTextColor.get();
-                EnumChatFormatting twitchNameColor = (sender != null && SharedGlobalConfig.twitchNameColors.get()) ? ((IRCUserImpl) sender).getNameColor() : null;
-                EnumChatFormatting noticeColor = theme.ircNoticeTextColor.get();
+                TextFormatting emoteColor = theme.emoteTextColor.get();
+                TextFormatting twitchNameColor = (sender != null && SharedGlobalConfig.twitchNameColors.get()) ? ((IRCUserImpl) sender).getNameColor() : null;
+                TextFormatting noticeColor = theme.ircNoticeTextColor.get();
                 if (isEmote && (emoteColor != null || twitchNameColor != null)) {
-                    chatComponent.getChatStyle().setColor(twitchNameColor != null ? twitchNameColor : emoteColor);
+                    chatComponent.getStyle().setColor(twitchNameColor != null ? twitchNameColor : emoteColor);
                 } else if (isNotice && noticeColor != null) {
-                    chatComponent.getChatStyle().setColor(noticeColor);
+                    chatComponent.getStyle().setColor(noticeColor);
                 }
                 EiraIRCAPI.getChatHandler().addChatMessage(chatComponent, sender);
                 break;
@@ -254,7 +254,7 @@ public class IRCEventHandler {
                 if (settings.muted.get()) {
                     return;
                 }
-                if(connection.isTwitch() && sender != null && settings.subOnly.get() && !((TwitchUser) sender).isTwitchSubscriber(channel)) {
+                if (connection.isTwitch() && sender != null && settings.subOnly.get() && !((TwitchUser) sender).isTwitchSubscriber(channel)) {
                     return;
                 }
                 if (EiraIRC.proxy.checkClientBridge(event)) {
@@ -277,19 +277,19 @@ public class IRCEventHandler {
                 } else {
                     format = botSettings.getMessageFormat().mcChannelMessage;
                 }
-                IChatComponent chatComponent = MessageFormat.formatChatComponent(format, connection, channel, sender, message, MessageFormat.Target.Minecraft, event.isEmote ? MessageFormat.Mode.Emote : MessageFormat.Mode.Message);
+                ITextComponent chatComponent = MessageFormat.formatChatComponent(format, connection, channel, sender, message, MessageFormat.Target.Minecraft, event.isEmote ? MessageFormat.Mode.Emote : MessageFormat.Mode.Message);
                 if (isNotice && botSettings.hideNotices.get()) {
                     logger.info(chatComponent.getUnformattedText());
                     return;
                 }
                 ThemeSettings theme = ConfigHelper.getTheme(event.channel);
-                EnumChatFormatting emoteColor = theme.emoteTextColor.get();
-                EnumChatFormatting twitchNameColor = (sender != null && SharedGlobalConfig.twitchNameColors.get()) ? ((IRCUserImpl) sender).getNameColor() : null;
-                EnumChatFormatting noticeColor = theme.ircNoticeTextColor.get();
+                TextFormatting emoteColor = theme.emoteTextColor.get();
+                TextFormatting twitchNameColor = (sender != null && SharedGlobalConfig.twitchNameColors.get()) ? ((IRCUserImpl) sender).getNameColor() : null;
+                TextFormatting noticeColor = theme.ircNoticeTextColor.get();
                 if (isEmote && (emoteColor != null || twitchNameColor != null)) {
-                    chatComponent.getChatStyle().setColor(twitchNameColor != null ? twitchNameColor : emoteColor);
+                    chatComponent.getStyle().setColor(twitchNameColor != null ? twitchNameColor : emoteColor);
                 } else if (isNotice && noticeColor != null) {
-                    chatComponent.getChatStyle().setColor(noticeColor);
+                    chatComponent.getStyle().setColor(noticeColor);
                 }
                 EiraIRCAPI.getChatHandler().addChatMessage(chatComponent, channel);
                 break;
@@ -309,9 +309,9 @@ public class IRCEventHandler {
                 if (ConfigHelper.getGeneralSettings(channel).muted.get()) {
                     return;
                 }
-                if(channel.hasTopic()) {
+                if (channel.hasTopic()) {
                     if (user == null) {
-                        IChatComponent chatComponent = MessageFormat.formatChatComponent(ConfigHelper.getBotSettings(channel).getMessageFormat().mcTopic, connection, channel, null, channel.getTopic(), MessageFormat.Target.Minecraft, MessageFormat.Mode.Message);
+                        ITextComponent chatComponent = MessageFormat.formatChatComponent(ConfigHelper.getBotSettings(channel).getMessageFormat().mcTopic, connection, channel, null, channel.getTopic(), MessageFormat.Target.Minecraft, MessageFormat.Mode.Message);
                         EiraIRCAPI.getChatHandler().addChatMessage(chatComponent, channel);
                     } else {
                         ChatComponentBuilder.create().color('e').lang("eirairc:general.topicChange", user.getName(), channel.getName()).color('f').text(channel.getTopic()).send(channel);
@@ -445,7 +445,7 @@ public class IRCEventHandler {
                 break;
             case IRCReplyCodes.ERR_MODELESS:
                 AuthManager.NickServData nickServData = AuthManager.getNickServData(connection.getIdentifier());
-                if(nickServData == null) {
+                if (nickServData == null) {
                     ChatComponentBuilder.create().color('c').lang("eirairc:error.notIdentified", args[1]).send(connection);
                 }
                 connection.joinAfterNickServ(args[1]);
@@ -553,15 +553,15 @@ public class IRCEventHandler {
                 } else {
                     format = botSettings.getMessageFormat().mcChannelMessage;
                 }
-                IChatComponent chatComponent = MessageFormat.formatChatComponent(format, event.connection, event.channel, event.sender, message, MessageFormat.Target.Minecraft, MessageFormat.Mode.Message);
+                ITextComponent chatComponent = MessageFormat.formatChatComponent(format, event.connection, event.channel, event.sender, message, MessageFormat.Target.Minecraft, MessageFormat.Mode.Message);
                 if (event.isNotice && botSettings.hideNotices.get()) {
                     logger.info(chatComponent.getUnformattedText());
                     return;
                 }
                 ThemeSettings theme = ConfigHelper.getTheme(event.channel);
-                EnumChatFormatting noticeColor = theme.ircNoticeTextColor.get();
+                TextFormatting noticeColor = theme.ircNoticeTextColor.get();
                 if (event.isNotice && noticeColor != null) {
-                    chatComponent.getChatStyle().setColor(noticeColor);
+                    chatComponent.getStyle().setColor(noticeColor);
                 }
                 EiraIRCAPI.getChatHandler().addChatMessage(chatComponent, channel);
                 break;
@@ -612,7 +612,7 @@ public class IRCEventHandler {
                 } else {
                     format = botSettings.getMessageFormat().mcPrivateMessage;
                 }
-                IChatComponent chatComponent = MessageFormat.formatChatComponent(format, event.connection, null, event.sender, message, MessageFormat.Target.Minecraft, MessageFormat.Mode.Message);
+                ITextComponent chatComponent = MessageFormat.formatChatComponent(format, event.connection, null, event.sender, message, MessageFormat.Target.Minecraft, MessageFormat.Mode.Message);
                 if (event.isNotice && botSettings.hideNotices.get()) {
                     logger.info(chatComponent.getUnformattedText());
                     return;
@@ -626,9 +626,9 @@ public class IRCEventHandler {
                 }
                 EiraIRC.instance.getChatSessionHandler().addTargetUser(event.sender);
                 ThemeSettings theme = ConfigHelper.getTheme(event.sender);
-                EnumChatFormatting noticeColor = theme.ircNoticeTextColor.get();
+                TextFormatting noticeColor = theme.ircNoticeTextColor.get();
                 if (event.isNotice && noticeColor != null) {
-                    chatComponent.getChatStyle().setColor(noticeColor);
+                    chatComponent.getStyle().setColor(noticeColor);
                 }
                 EiraIRCAPI.getChatHandler().addChatMessage(chatComponent, sender);
                 break;

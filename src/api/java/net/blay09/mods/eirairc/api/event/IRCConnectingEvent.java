@@ -9,12 +9,13 @@ import net.blay09.mods.eirairc.api.irc.IRCConnection;
  */
 public class IRCConnectingEvent extends IRCEvent {
 
-	/**
-	 * INTERNAL EVENT. YOU SHOULD NOT POST THIS YOURSELF.
-	 * @param connection the connection that is being created
-	 */
-	public IRCConnectingEvent(IRCConnection connection) {
-		super(connection);
-	}
+    /**
+     * INTERNAL EVENT. YOU SHOULD NOT POST THIS YOURSELF.
+     *
+     * @param connection the connection that is being created
+     */
+    public IRCConnectingEvent(IRCConnection connection) {
+        super(connection);
+    }
 
 }

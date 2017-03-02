@@ -8,27 +8,27 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 public class MessageRedirect implements IMessage {
 
-	private String redirectConfig;
+    private String redirectConfig;
 
-	public MessageRedirect() {
-	}
+    public MessageRedirect() {
+    }
 
-	public MessageRedirect(String redirectConfig) {
-		this.redirectConfig = redirectConfig;
-	}
+    public MessageRedirect(String redirectConfig) {
+        this.redirectConfig = redirectConfig;
+    }
 
-	@Override
-	public void fromBytes(ByteBuf buf) {
-		redirectConfig = ByteBufUtils.readUTF8String(buf);
-	}
+    @Override
+    public void fromBytes(ByteBuf buf) {
+        redirectConfig = ByteBufUtils.readUTF8String(buf);
+    }
 
-	@Override
-	public void toBytes(ByteBuf buf) {
-		ByteBufUtils.writeUTF8String(buf, redirectConfig);
-	}
+    @Override
+    public void toBytes(ByteBuf buf) {
+        ByteBufUtils.writeUTF8String(buf, redirectConfig);
+    }
 
-	public String getRedirectConfig() {
-		return redirectConfig;
-	}
+    public String getRedirectConfig() {
+        return redirectConfig;
+    }
 
 }

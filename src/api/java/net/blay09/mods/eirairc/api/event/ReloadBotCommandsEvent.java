@@ -12,16 +12,17 @@ import net.minecraftforge.fml.common.eventhandler.Event;
  */
 public class ReloadBotCommandsEvent extends Event {
 
-	/**
-	 * the bot reloading it's command register
-	 */
-	public final IRCBot bot;
+    /**
+     * the bot reloading it's command register
+     */
+    public final IRCBot bot;
 
-	/**
-	 * INTERNAL EVENT. YOU SHOULD NOT POST THIS YOURSELF.
-	 * @param bot the bot reloading it's command register
-	 */
-	public ReloadBotCommandsEvent(IRCBot bot) {
-		this.bot = bot;
-	}
+    /**
+     * INTERNAL EVENT. YOU SHOULD NOT POST THIS YOURSELF.
+     *
+     * @param bot the bot reloading it's command register
+     */
+    public ReloadBotCommandsEvent(IRCBot bot) {
+        this.bot = bot;
+    }
 }

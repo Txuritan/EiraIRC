@@ -32,20 +32,20 @@ public class CommandUnignore implements SubCommand {
 
     @Override
     public boolean processCommand(ICommandSender sender, IRCContext context, String[] args, boolean serverSide) throws WrongUsageException {
-        if(args.length < 1) {
+        if (args.length < 1) {
             throw new WrongUsageException(getCommandUsage(sender));
         }
         IRCContext target = EiraIRCAPI.parseContext(context, args[0], IRCContext.ContextType.IRCUser);
-        if(target.getContextType() == IRCContext.ContextType.Error) {
+        if (target.getContextType() == IRCContext.ContextType.Error) {
             Utils.sendLocalizedMessage(sender, target.getName(), args[0]);
             return true;
         }
         IRCUser user = (IRCUser) target;
-        if(user.getHostname() == null) {
+        if (user.getHostname() == null) {
             Utils.sendLocalizedMessage(sender, "commands.unignore.notKnown", target.getName());
             return true;
         }
-        if(!IgnoreList.isIgnored(user)) {
+        if (!IgnoreList.isIgnored(user)) {
             Utils.sendLocalizedMessage(sender, "commands.unignore.notIgnored", target.getName());
             return true;
         }
@@ -60,7 +60,8 @@ public class CommandUnignore implements SubCommand {
     }
 
     @Override
-    public void addTabCompletionOptions(List<String> list, ICommandSender sender, String[] args) {}
+    public void addTabCompletionOptions(List<String> list, ICommandSender sender, String[] args) {
+    }
 
     @Override
     public boolean isUsernameIndex(String[] args, int idx) {

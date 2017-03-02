@@ -88,5 +88,4 @@ public class InterOpCommandUserModeBase implements SubCommand {
     @Override
     public void addTabCompletionOptions(List<String> list, ICommandSender sender, String[] args) {
     }
-
 }

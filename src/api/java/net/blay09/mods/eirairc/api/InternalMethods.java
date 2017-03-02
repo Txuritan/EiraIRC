@@ -8,12 +8,19 @@ import net.blay09.mods.eirairc.api.upload.UploadHoster;
 import net.minecraft.command.ICommandSender;
 
 public interface InternalMethods {
-	boolean isConnectedTo(String serverHost);
-	IRCContext parseContext(IRCContext parentContext, String contextPath, IRCContext.ContextType expectedType);
-	void registerSubCommand(SubCommand command);
-	void registerUploadHoster(UploadHoster uploadHoster);
-	boolean hasClientSideInstalled(ICommandSender user);
-	void relayChat(ICommandSender sender, String message, boolean isEmote, boolean isNotice, IRCContext target);
-	IConfigManager getSharedGlobalConfig();
-	IConfigManager getClientGlobalConfig();
+    boolean isConnectedTo(String serverHost);
+
+    IRCContext parseContext(IRCContext parentContext, String contextPath, IRCContext.ContextType expectedType);
+
+    void registerSubCommand(SubCommand command);
+
+    void registerUploadHoster(UploadHoster uploadHoster);
+
+    boolean hasClientSideInstalled(ICommandSender user);
+
+    void relayChat(ICommandSender sender, String message, boolean isEmote, boolean isNotice, IRCContext target);
+
+    IConfigManager getSharedGlobalConfig();
+
+    IConfigManager getClientGlobalConfig();
 }

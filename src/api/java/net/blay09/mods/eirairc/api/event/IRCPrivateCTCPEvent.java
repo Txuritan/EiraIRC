@@ -11,15 +11,16 @@ import net.blay09.mods.eirairc.api.irc.IRCUser;
  * If this event is cancelled, EiraIRC will not post the message in chat.
  */
 public class IRCPrivateCTCPEvent extends IRCPrivateMessageEvent {
-	/**
-	 * INTERNAL EVENT. YOU SHOULD NOT POST THIS YOURSELF.
-	 * @param connection the connection this IRC message came from
-	 * @param sender the user that sent this IRC message
-	 * @param rawMessage the raw IRC message that was sent
-	 * @param message the message that was sent
-	 * @param isNotice true, if this message was sent as a NOTICE
-	 */
-	public IRCPrivateCTCPEvent(IRCConnection connection, IRCUser sender, IRCMessage rawMessage, String message, boolean isNotice) {
-		super(connection, rawMessage, sender, message, isNotice);
-	}
+    /**
+     * INTERNAL EVENT. YOU SHOULD NOT POST THIS YOURSELF.
+     *
+     * @param connection the connection this IRC message came from
+     * @param sender     the user that sent this IRC message
+     * @param rawMessage the raw IRC message that was sent
+     * @param message    the message that was sent
+     * @param isNotice   true, if this message was sent as a NOTICE
+     */
+    public IRCPrivateCTCPEvent(IRCConnection connection, IRCUser sender, IRCMessage rawMessage, String message, boolean isNotice) {
+        super(connection, rawMessage, sender, message, isNotice);
+    }
 }

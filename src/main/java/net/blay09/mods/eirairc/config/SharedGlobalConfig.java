@@ -92,7 +92,7 @@ public class SharedGlobalConfig {
     }
 
     public static boolean handleConfigCommand(ICommandSender sender, String key, String value) {
-        if(manager.setFromString(key, value)) {
+        if (manager.setFromString(key, value)) {
         } else if (theme.handleConfigCommand(sender, key, value)) {
         } else if (botSettings.handleConfigCommand(sender, key, value)) {
         } else if (generalSettings.handleConfigCommand(sender, key, value)) {
@@ -104,7 +104,7 @@ public class SharedGlobalConfig {
 
     public static String handleConfigCommand(ICommandSender sender, String key) {
         String value = manager.getAsString(key);
-        if(value == null) {
+        if (value == null) {
             value = theme.handleConfigCommand(sender, key);
         }
         if (value == null) {
@@ -118,14 +118,14 @@ public class SharedGlobalConfig {
 
     public static void addOptionsToList(List<String> list, String option, boolean autoCompleteOption) {
         if (autoCompleteOption) {
-            for(ConfigProperty property : manager.getProperties()) {
-                if(property.getName().startsWith(option)) {
+            for (ConfigProperty property : manager.getProperties()) {
+                if (property.getName().startsWith(option)) {
                     list.add(property.getName());
                 }
             }
         } else {
             ConfigProperty property = manager.getProperty(option);
-            if(property != null && property.get().getClass() == Boolean.class) {
+            if (property != null && property.get().getClass() == Boolean.class) {
                 list.add("true");
                 list.add("false");
             }

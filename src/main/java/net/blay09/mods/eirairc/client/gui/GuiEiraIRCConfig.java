@@ -51,5 +51,4 @@ public class GuiEiraIRCConfig extends GuiConfig {
         }
         return list;
     }
-
 }

@@ -6,48 +6,49 @@ import java.util.Collection;
 
 public interface IRCUser extends IRCContext {
 
-	/**
-	 * @return a collection of the channels this user is part of
-	 */
-	Collection<IRCChannel> getChannels();
+    /**
+     * @return a collection of the channels this user is part of
+     */
+    Collection<IRCChannel> getChannels();
 
-	/**
-	 * @param channel the channel to check for the mode prefix
-	 * @return the mode prefix (@, +, etc.) of this user for the given channel
-	*/
-	String getChannelModePrefix(IRCChannel channel);
+    /**
+     * @param channel the channel to check for the mode prefix
+     * @return the mode prefix (@, +, etc.) of this user for the given channel
+     */
+    String getChannelModePrefix(IRCChannel channel);
 
-	/**
-	 * @param channel the channel to check for the OP flags
-	 * @return true if this user is an OP in this channel
-	 */
-	boolean isOperator(IRCChannel channel);
+    /**
+     * @param channel the channel to check for the OP flags
+     * @return true if this user is an OP in this channel
+     */
+    boolean isOperator(IRCChannel channel);
 
-	/**
-	 * @param channel the channel to check for the voice flags
-	 * @return true if this user is a voiced in this channel
-	 */
-	boolean hasVoice(IRCChannel channel);
+    /**
+     * @param channel the channel to check for the voice flags
+     * @return true if this user is a voiced in this channel
+     */
+    boolean hasVoice(IRCChannel channel);
 
-	/**
-	 * Returns the NickServ name or null if the user is not registered with services. In the case of Twitch, it will return the all-lowercase username.
-	 * @return NickServ or Twitch username or null if not authenticated with IRC services
-	 */
-	String getAccountName();
+    /**
+     * Returns the NickServ name or null if the user is not registered with services. In the case of Twitch, it will return the all-lowercase username.
+     *
+     * @return NickServ or Twitch username or null if not authenticated with IRC services
+     */
+    String getAccountName();
 
-	/**
-	 * @return the username setup in the ident of this user
-	 */
-	String getUsername();
+    /**
+     * @return the username setup in the ident of this user
+     */
+    String getUsername();
 
-	/**
-	 * @return the hostname of this user
-	 */
-	String getHostname();
+    /**
+     * @return the hostname of this user
+     */
+    String getHostname();
 
-	/**
-	 * @return a TwitchUser or null if this user is not from a Twitch connection
-	 */
-	TwitchUser getTwitchUser();
+    /**
+     * @return a TwitchUser or null if this user is not from a Twitch connection
+     */
+    TwitchUser getTwitchUser();
 
 }

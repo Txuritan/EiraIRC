@@ -9,18 +9,19 @@ import net.blay09.mods.eirairc.api.irc.IRCConnection;
  */
 public class IRCConnectionFailedEvent extends IRCEvent {
 
-	/**
-	 * the exception that caused this connection to fail.
-	 */
-	public final Exception exception;
+    /**
+     * the exception that caused this connection to fail.
+     */
+    public final Exception exception;
 
-	/**
-	 * INTERNAL EVENT. YOU SHOULD NOT POST THIS YOURSELF.
-	 * @param connection the connection that was created
-	 */
-	public IRCConnectionFailedEvent(IRCConnection connection, Exception exception) {
-		super(connection);
-		this.exception = exception;
-	}
+    /**
+     * INTERNAL EVENT. YOU SHOULD NOT POST THIS YOURSELF.
+     *
+     * @param connection the connection that was created
+     */
+    public IRCConnectionFailedEvent(IRCConnection connection, Exception exception) {
+        super(connection);
+        this.exception = exception;
+    }
 
 }

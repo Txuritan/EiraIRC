@@ -43,21 +43,21 @@ public class GuiSleepExtended extends GuiSleepMP {
 
     @Override
     public void confirmClicked(boolean result, int id) {
-        if(extension.confirmClicked(result, id)) {
+        if (extension.confirmClicked(result, id)) {
             super.confirmClicked(result, id);
         }
     }
 
     @Override
     protected void keyTyped(char unicode, int keyCode) throws IOException {
-        if(extension.keyTyped(unicode, keyCode)) {
+        if (extension.keyTyped(unicode, keyCode)) {
             super.keyTyped(unicode, keyCode);
         }
     }
 
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int button) throws IOException {
-        if(extension.mouseClicked(mouseX, mouseY, button)) {
+        if (extension.mouseClicked(mouseX, mouseY, button)) {
             super.mouseClicked(mouseX, mouseY, button);
         }
     }
@@ -69,11 +69,11 @@ public class GuiSleepExtended extends GuiSleepMP {
         extension.postRender();
     }
 
-    @Override
+    /*@Override
     public void autocompletePlayerNames() {
-        if(extension.autocompletePlayernames()) {
+        if (extension.autocompletePlayernames()) {
             super.autocompletePlayerNames();
         }
-    }
+    }*/
 
 }

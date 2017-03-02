@@ -15,10 +15,11 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.Util;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.Sys;
 
@@ -39,18 +40,18 @@ public class Utils {
 
     public static void sendLocalizedMessage(ICommandSender sender, String key, Object... args) {
         if (EiraIRCAPI.hasClientSideInstalled(sender)) {
-            sender.addChatMessage(new ChatComponentTranslation("eirairc:" + key, args));
+            sender.sendMessage(new TextComponentTranslation("eirairc:" + key, args));
         } else {
-            sender.addChatMessage(new ChatComponentText(new ChatComponentTranslation("eirairc:" + key, args).getUnformattedText()));
+            sender.sendMessage(new TextComponentString(new TextComponentTranslation("eirairc:" + key, args).getUnformattedText()));
         }
     }
 
-    public static void addMessageToChat(IChatComponent chatComponent) {
-        if (MinecraftServer.getServer() != null && MinecraftServer.getServer().getConfigurationManager() != null && !MinecraftServer.getServer().isSinglePlayer()) {
-            MinecraftServer.getServer().getConfigurationManager().sendChatMsg(translateToDefault(chatComponent));
+    public static void addMessageToChat(ITextComponent chatComponent) {
+        if (FMLCommonHandler.instance().getMinecraftServerInstance().getServer() != null && !FMLCommonHandler.instance().getMinecraftServerInstance().getServer().isSinglePlayer()) {
+            FMLCommonHandler.instance().getMinecraftServerInstance().getServer().sendMessage(translateToDefault(chatComponent));
         } else {
-            if (Minecraft.getMinecraft().thePlayer != null) {
-                Minecraft.getMinecraft().thePlayer.addChatMessage(chatComponent);
+            if (Minecraft.getMinecraft().player != null) {
+                Minecraft.getMinecraft().player.sendMessage(chatComponent);
             }
         }
     }
@@ -80,7 +81,7 @@ public class Utils {
     }
 
     public static boolean isOP(ICommandSender sender) {
-        return MinecraftServer.getServer() == null || (MinecraftServer.getServer().isSinglePlayer() && !MinecraftServer.getServer().isDedicatedServer()) || sender.canCommandSenderUseCommand(3, "");
+        return FMLCommonHandler.instance().getMinecraftServerInstance().getServer() == null || (FMLCommonHandler.instance().getMinecraftServerInstance().getServer().isSinglePlayer() && !FMLCommonHandler.instance().getMinecraftServerInstance().getServer().isDedicatedServer()) || sender.canUseCommand(3, "");
     }
 
     public static void addConnectionsToList(List<String> list) {
@@ -101,9 +102,9 @@ public class Utils {
         for (IRCUser user : userList) {
             if (s.length() + user.getName().length() > Globals.CHAT_MAX_LENGTH) {
                 if (player == null) {
-                    addMessageToChat(new ChatComponentText(s));
+                    addMessageToChat(new TextComponentString(s));
                 } else {
-                    player.addChatMessage(new ChatComponentText(s));
+                    player.sendMessage(new TextComponentString(s));
                 }
                 s = " * ";
             }
@@ -114,18 +115,18 @@ public class Utils {
         }
         if (s.length() > 3) {
             if (player == null) {
-                addMessageToChat(new ChatComponentText(s));
+                addMessageToChat(new TextComponentString(s));
             } else {
-                player.addChatMessage(new ChatComponentText(s));
+                player.sendMessage(new TextComponentString(s));
             }
         }
     }
 
     public static void sendPlayerList(IRCContext context) {
-        if (MinecraftServer.getServer() == null || MinecraftServer.getServer().isSinglePlayer()) {
+        if (FMLCommonHandler.instance().getMinecraftServerInstance() == null || FMLCommonHandler.instance().getMinecraftServerInstance().isSinglePlayer()) {
             return;
         }
-        List<EntityPlayerMP> playerList = MinecraftServer.getServer().getConfigurationManager().playerEntityList;
+        List<EntityPlayerMP> playerList = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayers();
         if (playerList.size() == 0) {
             if (context instanceof IRCUser) {
                 context.notice(I19n.format("eirairc:bot.noPlayersOnline"));
@@ -190,7 +191,7 @@ public class Utils {
     public static void openDirectory(File dir) {
         if (Util.getOSType() == Util.EnumOS.OSX) {
             try {
-                Runtime.getRuntime().exec(new String[]{"/usr/bin/open", dir.getAbsolutePath()});
+                Runtime.getRuntime().exec(new String[]{ "/usr/bin/open", dir.getAbsolutePath() });
                 return;
             } catch (IOException ignored) {
             }
@@ -250,11 +251,11 @@ public class Utils {
     }
 
     public static String getCurrentServerName() {
-        if (MinecraftServer.getServer() != null) {
-            if (MinecraftServer.getServer().isSinglePlayer()) {
+        if (FMLCommonHandler.instance().getMinecraftServerInstance() != null) {
+            if (FMLCommonHandler.instance().getMinecraftServerInstance().isSinglePlayer()) {
                 return "Singleplayer";
             } else {
-                return MinecraftServer.getServer().getServerHostname();
+                return FMLCommonHandler.instance().getMinecraftServerInstance().getServerHostname();
             }
         } else {
             return "Multiplayer";
@@ -262,7 +263,7 @@ public class Utils {
     }
 
     public static boolean isServerSide() {
-        return MinecraftServer.getServer() != null && MinecraftServer.getServer().isDedicatedServer();
+        return FMLCommonHandler.instance().getMinecraftServerInstance() != null && FMLCommonHandler.instance().getMinecraftServerInstance().isDedicatedServer();
     }
 
     public static String extractHost(String url) {
@@ -322,10 +323,10 @@ public class Utils {
                 }
                 return ArrayUtils.toPrimitive(portList.toArray(new Integer[portList.size()]));
             } catch (NumberFormatException e) {
-                return new int[]{defaultPort};
+                return new int[]{ defaultPort };
             }
         }
-        return new int[]{defaultPort};
+        return new int[]{ defaultPort };
     }
 
     @Deprecated
@@ -334,21 +335,21 @@ public class Utils {
     }
 
     @Deprecated
-    public static IChatComponent translateToDefault(IChatComponent component) {
-        if (component instanceof ChatComponentText) {
-            return translateChildrenToDefault((ChatComponentText) component);
-        } else if (component instanceof ChatComponentTranslation) {
-            return translateComponentToDefault((ChatComponentTranslation) component);
+    public static ITextComponent translateToDefault(ITextComponent component) {
+        if (component instanceof TextComponentString) {
+            return translateChildrenToDefault((TextComponentString) component);
+        } else if (component instanceof TextComponentTranslation) {
+            return translateComponentToDefault((TextComponentTranslation) component);
         }
         return null;
     }
 
     @Deprecated
-    private static IChatComponent translateChildrenToDefault(ChatComponentText chatComponent) {
-        ChatComponentText copyComponent = new ChatComponentText(chatComponent.getChatComponentText_TextValue());
-        copyComponent.setChatStyle(chatComponent.getChatStyle());
+    private static ITextComponent translateChildrenToDefault(TextComponentString chatComponent) {
+        TextComponentString copyComponent = new TextComponentString(chatComponent.getUnformattedComponentText());
+        copyComponent.setStyle(chatComponent.getStyle());
         for (Object object : chatComponent.getSiblings()) {
-            IChatComponent adjustedComponent = translateToDefault((IChatComponent) object);
+            ITextComponent adjustedComponent = translateToDefault((ITextComponent) object);
             if (adjustedComponent != null) {
                 copyComponent.appendSibling(adjustedComponent);
             }
@@ -357,22 +358,22 @@ public class Utils {
     }
 
     @Deprecated
-    public static IChatComponent translateComponentToDefault(ChatComponentTranslation chatComponent) {
+    public static ITextComponent translateComponentToDefault(TextComponentTranslation chatComponent) {
         Object[] formatArgs = chatComponent.getFormatArgs();
         Object[] copyFormatArgs = new Object[formatArgs.length];
         for (int i = 0; i < formatArgs.length; i++) {
-            if (formatArgs[i] instanceof IChatComponent) {
-                copyFormatArgs[i] = translateToDefault((IChatComponent) formatArgs[i]);
+            if (formatArgs[i] instanceof ITextComponent) {
+                copyFormatArgs[i] = translateToDefault((ITextComponent) formatArgs[i]);
             } else {
-                ChatComponentText textComponent = new ChatComponentText(formatArgs[i] == null ? "null" : formatArgs[i].toString());
-                textComponent.getChatStyle().setParentStyle(chatComponent.getChatStyle());
+                TextComponentString textComponent = new TextComponentString(formatArgs[i] == null ? "null" : formatArgs[i].toString());
+                textComponent.getStyle().setParentStyle(chatComponent.getStyle());
                 copyFormatArgs[i] = textComponent;
             }
         }
-        ChatComponentText translateComponent = new ChatComponentText(I19n.format(chatComponent.getKey(), copyFormatArgs));
-        translateComponent.setChatStyle(chatComponent.getChatStyle());
+        TextComponentString translateComponent = new TextComponentString(I19n.format(chatComponent.getKey(), copyFormatArgs));
+        translateComponent.setStyle(chatComponent.getStyle());
         for (Object object : chatComponent.getSiblings()) {
-            IChatComponent adjustedComponent = translateToDefault((IChatComponent) object);
+            ITextComponent adjustedComponent = translateToDefault((ITextComponent) object);
             if (adjustedComponent != null) {
                 translateComponent.appendSibling(adjustedComponent);
             }

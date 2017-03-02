@@ -11,7 +11,7 @@ import net.blay09.mods.eirairc.util.Utils;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -38,7 +38,7 @@ public class CommandCTCP implements SubCommand {
 
     @Override
     public boolean processCommand(ICommandSender sender, IRCContext context, String[] args, boolean serverSide) throws CommandException {
-        if (!ConfigHelper.getBotSettings(context).allowCTCP.get()){
+        if (!ConfigHelper.getBotSettings(context).allowCTCP.get()) {
             Utils.sendLocalizedMessage(sender, "commands.ctcp.disabled");
             return true;
         }
@@ -76,7 +76,7 @@ public class CommandCTCP implements SubCommand {
             format = botSettings.getMessageFormat().mcSendPrivateMessage;
         }
 
-        IChatComponent chatComponent = MessageFormat.formatChatComponent(format, target.getConnection(), target, botUser, message, MessageFormat.Target.IRC, MessageFormat.Mode.Message);
+        ITextComponent chatComponent = MessageFormat.formatChatComponent(format, target.getConnection(), target, botUser, message, MessageFormat.Target.IRC, MessageFormat.Mode.Message);
         EiraIRCAPI.getChatHandler().addChatMessage(sender, chatComponent, target);
         return true;
     }

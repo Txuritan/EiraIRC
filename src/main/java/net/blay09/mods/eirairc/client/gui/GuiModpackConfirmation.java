@@ -2,6 +2,7 @@ package net.blay09.mods.eirairc.client.gui;
 
 import net.blay09.mods.eirairc.client.gui.base.GuiLabel;
 import net.blay09.mods.eirairc.config.LocalConfig;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.renderer.GlStateManager;
@@ -28,7 +29,7 @@ public class GuiModpackConfirmation extends EiraGuiScreen {
 
         String infoText = "";
         File infoTextFile = new File(mc.mcDataDir, "config/eirairc/modpack-confirmation.txt");
-        if(infoTextFile.exists()) {
+        if (infoTextFile.exists()) {
             try {
                 infoText = FileUtils.readFileToString(infoTextFile);
             } catch (IOException e) {
@@ -43,7 +44,7 @@ public class GuiModpackConfirmation extends EiraGuiScreen {
             }
         }
         lblInfo = new GuiLabel(infoText, 0, height / 2, -1);
-        lblInfo.posY -= lblInfo.getHeight() / 2f + fontRendererObj.FONT_HEIGHT;
+        lblInfo.posY -= lblInfo.getHeight() / 2f + Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT;
         lblInfo.setHAlignment(GuiLabel.HAlignment.Center, width);
         labelList.add(lblInfo);
 
@@ -62,14 +63,14 @@ public class GuiModpackConfirmation extends EiraGuiScreen {
     protected void actionPerformed(GuiButton button) throws IOException {
         super.actionPerformed(button);
 
-        if(button == chkDontShowAgain) {
+        if (button == chkDontShowAgain) {
             LocalConfig.disableModpackConfirmation.set(chkDontShowAgain.isChecked());
             LocalConfig.save();
-        } else if(button == btnEnable) {
+        } else if (button == btnEnable) {
             LocalConfig.disableModpackIRC.set(false);
             LocalConfig.save();
             mc.displayGuiScreen(new GuiMainMenu());
-        } else if(button == btnDisable) {
+        } else if (button == btnDisable) {
             LocalConfig.disableModpackIRC.set(true);
             LocalConfig.save();
             mc.displayGuiScreen(new GuiMainMenu());

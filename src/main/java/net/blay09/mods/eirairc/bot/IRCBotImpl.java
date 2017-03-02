@@ -23,64 +23,64 @@ import java.util.Map;
 
 public class IRCBotImpl implements IRCBot {
 
-	private final IRCConnectionImpl connection;
-	private final Map<String, IBotCommand> commands = new HashMap<>();
+    private final IRCConnectionImpl connection;
+    private final Map<String, IBotCommand> commands = new HashMap<>();
 
-	public IRCBotImpl(IRCConnectionImpl connection) {
-		this.connection = connection;
+    public IRCBotImpl(IRCConnectionImpl connection) {
+        this.connection = connection;
 
-		reloadCommands();
-	}
+        reloadCommands();
+    }
 
-	public void reloadCommands() {
-		commands.clear();
-		if(isServerSide()) {
-			registerCommand(new BotCommandHelp());
-			registerCommand(new BotCommandMessage());
-			registerCommand(new BotCommandWho());
-			registerCommand(new BotCommandOp());
-			for(IBotCommand command : ConfigurationHandler.getCustomCommands()) {
-				registerCommand(command);
-			}
-		}
-		MinecraftForge.EVENT_BUS.post(new ReloadBotCommandsEvent(this));
-	}
+    public void reloadCommands() {
+        commands.clear();
+        if (isServerSide()) {
+            registerCommand(new BotCommandHelp());
+            registerCommand(new BotCommandMessage());
+            registerCommand(new BotCommandWho());
+            registerCommand(new BotCommandOp());
+            for (IBotCommand command : ConfigurationHandler.getCustomCommands()) {
+                registerCommand(command);
+            }
+        }
+        MinecraftForge.EVENT_BUS.post(new ReloadBotCommandsEvent(this));
+    }
 
-	@Override
-	public void registerCommand(IBotCommand command) {
-		commands.put(command.getCommandName().toLowerCase(), command);
-	}
+    @Override
+    public void registerCommand(IBotCommand command) {
+        commands.put(command.getCommandName().toLowerCase(), command);
+    }
 
-	public Collection<IBotCommand> getCommands() {
-		return commands.values();
-	}
+    public Collection<IBotCommand> getCommands() {
+        return commands.values();
+    }
 
-	@Override
-	public IRCConnection getConnection() {
-		return connection;
-	}
+    @Override
+    public IRCConnection getConnection() {
+        return connection;
+    }
 
-	public boolean processCommand(IRCChannel channel, IRCUser sender, String message) {
-		String[] args = message.split(" ");
-		if(ConfigHelper.getBotSettings(channel).disabledNativeCommands.get().containsString(args[0].toLowerCase(), true)) {
-			return false;
-		}
-		IBotCommand botCommand = commands.get(args[0].toLowerCase());
-		if(botCommand == null || (channel != null && !botCommand.isChannelCommand())) {
-			return false;
-		}
-		String[] shiftedArgs = ArrayUtils.subarray(args, 1, args.length);
-		if(botCommand.requiresAuth()) {
-			((IRCUserImpl) sender).queueAuthCommand(this, channel, botCommand, shiftedArgs);
-		} else {
-			botCommand.processCommand(this, channel, sender, shiftedArgs, botCommand);
-		}
-		return true;
-	}
+    public boolean processCommand(IRCChannel channel, IRCUser sender, String message) {
+        String[] args = message.split(" ");
+        if (ConfigHelper.getBotSettings(channel).disabledNativeCommands.get().containsString(args[0].toLowerCase(), true)) {
+            return false;
+        }
+        IBotCommand botCommand = commands.get(args[0].toLowerCase());
+        if (botCommand == null || (channel != null && !botCommand.isChannelCommand())) {
+            return false;
+        }
+        String[] shiftedArgs = ArrayUtils.subarray(args, 1, args.length);
+        if (botCommand.requiresAuth()) {
+            ((IRCUserImpl) sender).queueAuthCommand(this, channel, botCommand, shiftedArgs);
+        } else {
+            botCommand.processCommand(this, channel, sender, shiftedArgs, botCommand);
+        }
+        return true;
+    }
 
-	@Override
-	public boolean isServerSide() {
-		return Utils.isServerSide();
-	}
+    @Override
+    public boolean isServerSide() {
+        return Utils.isServerSide();
+    }
 
 }

@@ -10,24 +10,24 @@ import java.util.Map;
 
 public class EiraNetHandler {
 
-	private final Map<String, EiraPlayerInfo> playerInfoMap = Maps.newHashMap();
-	
-	public EiraPlayerInfo getPlayerInfo(String username) {
-		synchronized(playerInfoMap) {
-			EiraPlayerInfo playerInfo = playerInfoMap.get(username);
-			if(playerInfo == null) {
-				playerInfo = new EiraPlayerInfo(username);
-				playerInfoMap.put(username, playerInfo);
-			}
-			return playerInfo;
-		}
-	}
+    private final Map<String, EiraPlayerInfo> playerInfoMap = Maps.newHashMap();
 
-	@SubscribeEvent
-	public void onPlayerLogout(PlayerLoggedOutEvent event) {
-		synchronized(playerInfoMap) {
-			playerInfoMap.remove(event.player.getName());
-		}
-	}
-	
+    public EiraPlayerInfo getPlayerInfo(String username) {
+        synchronized (playerInfoMap) {
+            EiraPlayerInfo playerInfo = playerInfoMap.get(username);
+            if (playerInfo == null) {
+                playerInfo = new EiraPlayerInfo(username);
+                playerInfoMap.put(username, playerInfo);
+            }
+            return playerInfo;
+        }
+    }
+
+    @SubscribeEvent
+    public void onPlayerLogout(PlayerLoggedOutEvent event) {
+        synchronized (playerInfoMap) {
+            playerInfoMap.remove(event.player.getName());
+        }
+    }
+
 }

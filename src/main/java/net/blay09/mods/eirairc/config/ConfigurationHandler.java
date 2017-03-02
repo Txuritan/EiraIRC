@@ -57,9 +57,7 @@ public class ConfigurationHandler {
             }
         }
         MessageFormatConfig.setupDefaultFormats(formatDir);
-        File[] files = formatDir.listFiles((file, name) -> {
-            return name.endsWith(".cfg");
-        });
+        File[] files = formatDir.listFiles((file, name) -> name.endsWith(".cfg"));
         for (File file : files) {
             MessageFormatConfig dfc = new MessageFormatConfig(file);
             dfc.loadFormats();

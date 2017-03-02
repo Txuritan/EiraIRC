@@ -3,9 +3,9 @@ package net.blay09.mods.eirairc.util;
 import net.blay09.mods.eirairc.api.EiraIRCAPI;
 import net.blay09.mods.eirairc.api.irc.IRCContext;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatStyle;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
 
 import java.util.Arrays;
 
@@ -51,17 +51,17 @@ public class ChatComponentBuilder {
     }
 
     public void send(ICommandSender sender, IRCContext source) {
-        if(sender != null) {
+        if (sender != null) {
             EiraIRCAPI.getChatHandler().addChatMessage(sender, toChatComponent(), source);
         } else {
             EiraIRCAPI.getChatHandler().addChatMessage(toChatComponent(), source);
         }
-        buffer[index]= new StringBuilder();
+        buffer[index] = new StringBuilder();
     }
 
     public ChatComponentBuilder push() {
         index++;
-        if(buffer.length <= index) {
+        if (buffer.length <= index) {
             buffer = Arrays.copyOf(buffer, index);
         }
         buffer[index] = new StringBuilder();
@@ -75,18 +75,18 @@ public class ChatComponentBuilder {
         return result;
     }
 
-    public IChatComponent toChatComponent() {
-        IChatComponent rootComponent = null;
+    public ITextComponent toChatComponent() {
+        ITextComponent rootComponent = null;
         StringBuilder textBuffer = new StringBuilder();
         StringBuilder styleBuffer = new StringBuilder();
         String result = buffer[index].toString();
-        for(int i = 0; i < result.length(); i++) {
+        for (int i = 0; i < result.length(); i++) {
             char c = result.charAt(i);
-            if(c == '\u00a7' && i + 1 < result.length()) {
-                if(textBuffer.length() > 0) {
-                    IChatComponent newComponent = new ChatComponentText(textBuffer.toString());
+            if (c == '\u00a7' && i + 1 < result.length()) {
+                if (textBuffer.length() > 0) {
+                    ITextComponent newComponent = new TextComponentString(textBuffer.toString());
                     setStyleFromString(newComponent, styleBuffer.toString());
-                    if(rootComponent == null) {
+                    if (rootComponent == null) {
                         rootComponent = newComponent;
                     } else {
                         rootComponent.appendSibling(newComponent);
@@ -100,10 +100,10 @@ public class ChatComponentBuilder {
                 textBuffer.append(c);
             }
         }
-        if(textBuffer.length() > 0) {
-            IChatComponent newComponent = new ChatComponentText(textBuffer.toString());
+        if (textBuffer.length() > 0) {
+            ITextComponent newComponent = new TextComponentString(textBuffer.toString());
             setStyleFromString(newComponent, styleBuffer.toString());
-            if(rootComponent == null) {
+            if (rootComponent == null) {
                 rootComponent = newComponent;
             } else {
                 rootComponent.appendSibling(newComponent);
@@ -112,18 +112,29 @@ public class ChatComponentBuilder {
         return rootComponent;
     }
 
-    private void setStyleFromString(IChatComponent component, String style) {
-        ChatStyle chatStyle = component.getChatStyle();
-        if(style.length() > 0) {
-            for(int i = 1; i < style.length(); i += 2) {
+    private void setStyleFromString(ITextComponent component, String style) {
+        Style chatStyle = component.getStyle();
+        if (style.length() > 0) {
+            for (int i = 1; i < style.length(); i += 2) {
                 char c = style.charAt(i);
-                switch(c) {
-                    case 'o': chatStyle.setItalic(true); break;
-                    case 'n': chatStyle.setUnderlined(true); break;
-                    case 'm': chatStyle.setStrikethrough(true); break;
-                    case 'l': chatStyle.setBold(true); break;
-                    case 'k': chatStyle.setObfuscated(true); break;
-                    case 'r': break;
+                switch (c) {
+                    case 'o':
+                        chatStyle.setItalic(true);
+                        break;
+                    case 'n':
+                        chatStyle.setUnderlined(true);
+                        break;
+                    case 'm':
+                        chatStyle.setStrikethrough(true);
+                        break;
+                    case 'l':
+                        chatStyle.setBold(true);
+                        break;
+                    case 'k':
+                        chatStyle.setObfuscated(true);
+                        break;
+                    case 'r':
+                        break;
                     default:
                         chatStyle.setColor(IRCFormatting.getColorFromMCColorCode(c));
                 }

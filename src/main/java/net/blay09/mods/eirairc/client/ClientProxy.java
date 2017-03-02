@@ -27,6 +27,7 @@ import net.blay09.mods.eirairc.util.ChatComponentBuilder;
 import net.blay09.mods.eirairc.util.NotificationType;
 import net.blay09.mods.eirairc.util.Utils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.*;
@@ -35,6 +36,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
@@ -140,7 +142,19 @@ public class ClientProxy extends CommonProxy {
             notificationGUI.showNotification(type, text);
         }
         if (config == NotificationStyle.TextAndSound || config == NotificationStyle.SoundOnly) {
-            Minecraft.getMinecraft().getSoundHandler().playSound(new PositionedSoundRecord(new ResourceLocation(ClientGlobalConfig.notificationSound.get()), ClientGlobalConfig.notificationSoundVolume.get(), 1f, 0f, 0f, 0f));
+            Minecraft.getMinecraft().getSoundHandler().playSound(
+                    new PositionedSoundRecord(
+                            new ResourceLocation(
+                                    ClientGlobalConfig.notificationSound.get()
+                            ),
+                            SoundCategory.valueOf(ClientGlobalConfig.notificationSound.getName()),
+                            ClientGlobalConfig.notificationSoundVolume.get(),
+                            0f,
+                            false,
+                            0,
+                            ISound.AttenuationType.LINEAR,
+                            0.0F, 0.0F, 0.0F)
+            );
         }
     }
 
@@ -190,7 +204,7 @@ public class ClientProxy extends CommonProxy {
     public boolean checkClientBridge(IRCChannelMessageEvent event) {
         EntityPlayerSP entityPlayer = FMLClientHandler.instance().getClientPlayerEntity();
         if (entityPlayer != null && event.sender != null && ClientGlobalConfig.clientBridge.get()) {
-            for (NetworkPlayerInfo playerInfo : entityPlayer.sendQueue.getPlayerInfoMap()) {
+            for (NetworkPlayerInfo playerInfo : Minecraft.getMinecraft().getConnection().getPlayerInfoMap()) {
                 if (event.sender.getName().equalsIgnoreCase(playerInfo.getGameProfile().getName())) {
                     return true;
                 }
@@ -209,9 +223,9 @@ public class ClientProxy extends CommonProxy {
 
     @SubscribeEvent
     public void onGuiOpen(GuiOpenEvent event) {
-        if (event.gui instanceof GuiMainMenu) {
+        if (event.getGui() instanceof GuiMainMenu) {
             if (isFirstMainMenu && ClientGlobalConfig.showModpackConfirmation.get() && !LocalConfig.disableModpackConfirmation.get()) {
-                event.gui = new GuiModpackConfirmation();
+                event.setGui(new GuiModpackConfirmation());
                 isFirstMainMenu = false;
             }
         }

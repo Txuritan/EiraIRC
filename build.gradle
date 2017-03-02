@@ -7,7 +7,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
@@ -25,10 +25,12 @@ group = "net.blay09.mods"
 archivesBaseName = "eirairc"
 
 minecraft {
-    version = "1.8.9-11.15.0.1684"
+    //version = "1.8.9-11.15.0.1684"
+    version = "1.11.2-13.20.0.2228"
     runDir = "run"
     
-    mappings = "stable_20"
+    //mappings = "stable_20"
+    mappings = 'snapshot_20170301'
 }
 
 processResources
@@ -54,18 +56,17 @@ repositories {
     }
     maven {
         name = "eiranet"
-        url = "http://repo.blay09.net"
+        url = "http://artifactory.blay09.net/artifactory/jenkins-maven/"
     }
-    ivy {
-        name "blaynet"
-        artifactPattern "http://blay09.net/files/api/[module]-[revision]-[classifier].jar"
+    flatDir {
+        dirs 'libs'
     }
 }
 
 dependencies {
-    deobfCompile 'net.blay09.mods:eiramoticons:3.2.3:dev'
-    deobfCompile 'us.dynmap:DynmapCoreAPI:2.1'
-    deobfCompile group: 'mnm.mods', name: 'TabbyChat-API', version: '2.0-beta-SNAPSHOT.null', classifier: 'api'
+    deobfCompile 'net.blay09.mods:EiraMoticons_1.11:5.2.1'
+    deobfCompile 'us.dynmap:DynmapCoreAPI:2.4'
+    deobfCompile name: 'mod-tabbychat-2-2.2.1-mc1.11.2'
 }
 
 jar {

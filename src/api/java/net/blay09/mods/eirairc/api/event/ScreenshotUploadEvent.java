@@ -25,7 +25,8 @@ public class ScreenshotUploadEvent extends Event {
 
     /**
      * INTERNAL EVENT. YOU SHOULD NOT POST THIS YOURSELF.
-     * @param sourceFile the screenshot file that was meant to be uploaded
+     *
+     * @param sourceFile   the screenshot file that was meant to be uploaded
      * @param uploadedFile the resulting URLs of the screenshot upload or null if the upload failed
      */
     public ScreenshotUploadEvent(File sourceFile, UploadedFile uploadedFile) {

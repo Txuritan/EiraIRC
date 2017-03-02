@@ -12,25 +12,26 @@ import net.blay09.mods.eirairc.api.irc.IRCUser;
  */
 public class IRCUserJoinEvent extends IRCRawMessageEvent {
 
-	/**
-	 * the channel that the user joined
-	 */
-	public final IRCChannel channel;
+    /**
+     * the channel that the user joined
+     */
+    public final IRCChannel channel;
 
-	/**
-	 * the user that joined the channel
-	 */
-	public final IRCUser user;
+    /**
+     * the user that joined the channel
+     */
+    public final IRCUser user;
 
-	/**
-	 * INTERNAL EVENT. YOU SHOULD NOT POST THIS YOURSELF.
-	 * @param connection the connection this event is based on
-	 * @param channel the channel that the user joined
-	 * @param user the user that joined the channel
-	 */
-	public IRCUserJoinEvent(IRCConnection connection, IRCMessage rawMessage, IRCChannel channel, IRCUser user) {
-		super(connection, rawMessage);
-		this.channel = channel;
-		this.user = user;
-	}
+    /**
+     * INTERNAL EVENT. YOU SHOULD NOT POST THIS YOURSELF.
+     *
+     * @param connection the connection this event is based on
+     * @param channel    the channel that the user joined
+     * @param user       the user that joined the channel
+     */
+    public IRCUserJoinEvent(IRCConnection connection, IRCMessage rawMessage, IRCChannel channel, IRCUser user) {
+        super(connection, rawMessage);
+        this.channel = channel;
+        this.user = user;
+    }
 }

@@ -10,70 +10,71 @@ import net.blay09.mods.eirairc.util.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiEiraIRCMenu extends EiraGuiScreen {
 
-	private static final ResourceLocation meow = new ResourceLocation("mob.cat.meow");
+    private static final ResourceLocation meow = new ResourceLocation("mob.cat.meow");
 
-	private static final int BUTTON_SIZE = 64;
+    private static final int BUTTON_SIZE = 64;
 
-	private GuiMenuButton btnServers;
-	private GuiMenuButton btnTwitch;
-	private GuiMenuButton btnHelp;
-	private GuiMenuButton btnFriends;
-	private GuiMenuButton btnScreenshots;
-	private GuiMenuButton btnSettings;
+    private GuiMenuButton btnServers;
+    private GuiMenuButton btnTwitch;
+    private GuiMenuButton btnHelp;
+    private GuiMenuButton btnFriends;
+    private GuiMenuButton btnScreenshots;
+    private GuiMenuButton btnSettings;
 
-	@Override
-	public void initGui() {
-		super.initGui();
+    @Override
+    public void initGui() {
+        super.initGui();
 
-		final int buttonCenterX = width / 2;
-		final int buttonCenterY = height / 2;
+        final int buttonCenterX = width / 2;
+        final int buttonCenterY = height / 2;
 
-		btnServers = new GuiMenuButton(0, I19n.format("eirairc:gui.menu.servers"), buttonCenterX - 132, buttonCenterY - 95, BUTTON_SIZE, BUTTON_SIZE, EiraGui.atlas.findRegion("menu_servers"));
-		buttonList.add(btnServers);
+        btnServers = new GuiMenuButton(0, I19n.format("eirairc:gui.menu.servers"), buttonCenterX - 132, buttonCenterY - 95, BUTTON_SIZE, BUTTON_SIZE, EiraGui.atlas.findRegion("menu_servers"));
+        buttonList.add(btnServers);
 
-		btnTwitch = new GuiMenuButton(1, I19n.format("eirairc:gui.menu.twitch"), buttonCenterX - 32, buttonCenterY - 95, BUTTON_SIZE, BUTTON_SIZE, EiraGui.atlas.findRegion("menu_twitch"));
-		buttonList.add(btnTwitch);
+        btnTwitch = new GuiMenuButton(1, I19n.format("eirairc:gui.menu.twitch"), buttonCenterX - 32, buttonCenterY - 95, BUTTON_SIZE, BUTTON_SIZE, EiraGui.atlas.findRegion("menu_twitch"));
+        buttonList.add(btnTwitch);
 
-		btnScreenshots = new GuiMenuButton(2, I19n.format("eirairc:gui.menu.screenshots"), buttonCenterX + 64, buttonCenterY - 95, BUTTON_SIZE, BUTTON_SIZE, EiraGui.atlas.findRegion("menu_screenshots"));
-		buttonList.add(btnScreenshots);
+        btnScreenshots = new GuiMenuButton(2, I19n.format("eirairc:gui.menu.screenshots"), buttonCenterX + 64, buttonCenterY - 95, BUTTON_SIZE, BUTTON_SIZE, EiraGui.atlas.findRegion("menu_screenshots"));
+        buttonList.add(btnScreenshots);
 
-		btnFriends = new GuiMenuButton(3, I19n.format("eirairc:gui.menu.channels"), buttonCenterX - 132, buttonCenterY, BUTTON_SIZE, BUTTON_SIZE, EiraGui.atlas.findRegion("menu_friends"));
-		buttonList.add(btnFriends);
+        btnFriends = new GuiMenuButton(3, I19n.format("eirairc:gui.menu.channels"), buttonCenterX - 132, buttonCenterY, BUTTON_SIZE, BUTTON_SIZE, EiraGui.atlas.findRegion("menu_friends"));
+        buttonList.add(btnFriends);
 
-		btnHelp = new GuiMenuButton(4, I19n.format("eirairc:gui.menu.help"), buttonCenterX - 32, buttonCenterY, BUTTON_SIZE, BUTTON_SIZE, EiraGui.atlas.findRegion("menu_cat"));
-		btnHelp.setPlayButtonSound(false);
-		buttonList.add(btnHelp);
+        btnHelp = new GuiMenuButton(4, I19n.format("eirairc:gui.menu.help"), buttonCenterX - 32, buttonCenterY, BUTTON_SIZE, BUTTON_SIZE, EiraGui.atlas.findRegion("menu_cat"));
+        btnHelp.setPlayButtonSound(false);
+        buttonList.add(btnHelp);
 
-		btnSettings = new GuiMenuButton(5, I19n.format("eirairc:gui.menu.settings"), buttonCenterX + 64, buttonCenterY, BUTTON_SIZE, BUTTON_SIZE, EiraGui.atlas.findRegion("menu_settings"));
-		buttonList.add(btnSettings);
-	}
+        btnSettings = new GuiMenuButton(5, I19n.format("eirairc:gui.menu.settings"), buttonCenterX + 64, buttonCenterY, BUTTON_SIZE, BUTTON_SIZE, EiraGui.atlas.findRegion("menu_settings"));
+        buttonList.add(btnSettings);
+    }
 
-	@Override
-	public void actionPerformed(GuiButton button) {
-		if(button == btnTwitch) {
-			Minecraft.getMinecraft().displayGuiScreen(new GuiTwitch(this));
-		} else if(button == btnServers) {
-			Minecraft.getMinecraft().displayGuiScreen(new GuiServerConfigContainer(this));
-		} else if(button == btnScreenshots) {
-			Minecraft.getMinecraft().displayGuiScreen(new GuiScreenshots(this));
-		} else if(button == btnSettings) {
-			Minecraft.getMinecraft().displayGuiScreen(new GuiEiraIRCConfig(this));
-		} else if(button == btnHelp) {
-			Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.create(meow, 1f));
-			Utils.openWebpage("http://blay09.net/?page_id=63");
-		} else if(button == btnFriends) {
-			Minecraft.getMinecraft().displayGuiScreen(new GuiWelcome(this));
-		}
-	}
+    @Override
+    public void actionPerformed(GuiButton button) {
+        if (button == btnTwitch) {
+            Minecraft.getMinecraft().displayGuiScreen(new GuiTwitch(this));
+        } else if (button == btnServers) {
+            Minecraft.getMinecraft().displayGuiScreen(new GuiServerConfigContainer(this));
+        } else if (button == btnScreenshots) {
+            Minecraft.getMinecraft().displayGuiScreen(new GuiScreenshots(this));
+        } else if (button == btnSettings) {
+            Minecraft.getMinecraft().displayGuiScreen(new GuiEiraIRCConfig(this));
+        } else if (button == btnHelp) {
+            Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.ENTITY_CAT_PURREOW, 1f));
+            Utils.openWebpage("http://blay09.net/?page_id=63");
+        } else if (button == btnFriends) {
+            Minecraft.getMinecraft().displayGuiScreen(new GuiWelcome(this));
+        }
+    }
 
-	@Override
-	public void drawScreen(int mouseX, int mouseY, float par3) {
-		drawLightBackground(menuX, menuY, menuWidth, menuHeight);
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float par3) {
+        drawLightBackground(menuX, menuY, menuWidth, menuHeight);
 
-		super.drawScreen(mouseX, mouseY, par3);
-	}
+        super.drawScreen(mouseX, mouseY, par3);
+    }
 }

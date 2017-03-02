@@ -4,7 +4,7 @@ package net.blay09.mods.eirairc.api.event;
 
 import net.blay09.mods.eirairc.api.irc.IRCContext;
 import net.blay09.mods.eirairc.api.irc.IRCUser;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 /**
@@ -15,12 +15,12 @@ public class FormatNick extends Event {
 
     public final IRCUser user;
     public final IRCContext context;
-    public IChatComponent component;
+    public ITextComponent component;
 
     /**
      * @param component the chat component containing the formatted nick
      */
-    public FormatNick(IRCUser user, IRCContext context, IChatComponent component) {
+    public FormatNick(IRCUser user, IRCContext context, ITextComponent component) {
         this.user = user;
         this.context = context;
         this.component = component;

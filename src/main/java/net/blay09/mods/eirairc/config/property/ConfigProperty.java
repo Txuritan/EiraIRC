@@ -43,7 +43,7 @@ public class ConfigProperty<T> implements IConfigProperty<T> {
 
     @Override
     public T get() {
-        if(!hasValue && parentProperty != null) {
+        if (!hasValue && parentProperty != null) {
             return parentProperty.get();
         }
         return value != null ? value : defaultValue;
@@ -92,7 +92,7 @@ public class ConfigProperty<T> implements IConfigProperty<T> {
 
     @Override
     public T getDefaultValue() {
-        if(parentProperty != null) {
+        if (parentProperty != null) {
             return parentProperty.get();
         }
         return defaultValue;

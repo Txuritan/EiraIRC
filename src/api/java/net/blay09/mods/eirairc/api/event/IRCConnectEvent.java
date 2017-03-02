@@ -10,12 +10,13 @@ import net.blay09.mods.eirairc.api.irc.IRCMessage;
  */
 public class IRCConnectEvent extends IRCRawMessageEvent {
 
-	/**
-	 * INTERNAL EVENT. YOU SHOULD NOT POST THIS YOURSELF.
-	 * @param connection the connection that was created
-	 */
-	public IRCConnectEvent(IRCConnection connection, IRCMessage rawMessage) {
-		super(connection, rawMessage);
-	}
+    /**
+     * INTERNAL EVENT. YOU SHOULD NOT POST THIS YOURSELF.
+     *
+     * @param connection the connection that was created
+     */
+    public IRCConnectEvent(IRCConnection connection, IRCMessage rawMessage) {
+        super(connection, rawMessage);
+    }
 
 }

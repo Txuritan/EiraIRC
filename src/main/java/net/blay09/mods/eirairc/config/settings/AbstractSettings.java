@@ -5,7 +5,7 @@ import net.blay09.mods.eirairc.config.property.ConfigManager;
 import net.blay09.mods.eirairc.config.property.ConfigProperty;
 import net.blay09.mods.eirairc.util.IRCFormatting;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.config.Configuration;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public abstract class AbstractSettings {
     public AbstractSettings(AbstractSettings parent, String category) {
         this.parent = parent;
         this.category = category;
-        if(parent != null) {
+        if (parent != null) {
             manager.setParentManager(parent.manager);
         }
     }
@@ -35,7 +35,7 @@ public abstract class AbstractSettings {
     }
 
     public void pushDummyConfig() {
-        if(dummyConfig != null) {
+        if (dummyConfig != null) {
             load(dummyConfig, true);
             dummyConfig = null;
         }
@@ -58,8 +58,8 @@ public abstract class AbstractSettings {
 
     public String handleConfigCommand(ICommandSender sender, String key) {
         ConfigProperty property = manager.getProperty(key);
-        if(property != null) {
-            if(property.hasValue()) {
+        if (property != null) {
+            if (property.hasValue()) {
                 return property.getAsString();
             } else {
                 return "<inherit: " + property.getAsString() + ">";
@@ -74,18 +74,18 @@ public abstract class AbstractSettings {
 
     public void addOptionsToList(List<String> list, String option, boolean autoCompleteOption) {
         if (autoCompleteOption) {
-            for(ConfigProperty property : manager.getProperties()) {
-                if(property.getName().startsWith(option)) {
+            for (ConfigProperty property : manager.getProperties()) {
+                if (property.getName().startsWith(option)) {
                     list.add(property.getName());
                 }
             }
         } else {
             ConfigProperty property = manager.getProperty(option);
-            if(property != null) {
+            if (property != null) {
                 if (property.get().getClass() == Boolean.class) {
                     list.add("true");
                     list.add("false");
-                } else if (property.get().getClass() == EnumChatFormatting.class) {
+                } else if (property.get().getClass() == TextFormatting.class) {
                     IRCFormatting.addValidColorsToList(list);
                 }
             }

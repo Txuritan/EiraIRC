@@ -10,7 +10,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class HandlerRedirect implements IMessageHandler<MessageRedirect, IMessage> {
-
     @Override
     public IMessage onMessage(MessageRedirect message, MessageContext ctx) {
         EiraIRC.proxy.addScheduledTask(() -> {

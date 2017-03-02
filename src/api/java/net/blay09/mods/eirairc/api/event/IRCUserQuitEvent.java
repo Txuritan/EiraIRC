@@ -11,25 +11,26 @@ import net.blay09.mods.eirairc.api.irc.IRCUser;
  */
 public class IRCUserQuitEvent extends IRCRawMessageEvent {
 
-	/**
-	 * the user that disconnected from IRC
-	 */
-	public final IRCUser user;
+    /**
+     * the user that disconnected from IRC
+     */
+    public final IRCUser user;
 
-	/**
-	 * the quit message that was sent along
-	 */
-	public final String message;
+    /**
+     * the quit message that was sent along
+     */
+    public final String message;
 
-	/**
-	 * INTERNAL EVENT. YOU SHOULD NOT POST THIS YOURSELF.
-	 * @param connection the connection this event is based on
-	 * @param user the user that disconnected from IRC
-	 * @param message the quit message that was sent along
-	 */
-	public IRCUserQuitEvent(IRCConnection connection, IRCMessage rawMessage, IRCUser user, String message) {
-		super(connection, rawMessage);
-		this.user = user;
-		this.message = message;
-	}
+    /**
+     * INTERNAL EVENT. YOU SHOULD NOT POST THIS YOURSELF.
+     *
+     * @param connection the connection this event is based on
+     * @param user       the user that disconnected from IRC
+     * @param message    the quit message that was sent along
+     */
+    public IRCUserQuitEvent(IRCConnection connection, IRCMessage rawMessage, IRCUser user, String message) {
+        super(connection, rawMessage);
+        this.user = user;
+        this.message = message;
+    }
 }

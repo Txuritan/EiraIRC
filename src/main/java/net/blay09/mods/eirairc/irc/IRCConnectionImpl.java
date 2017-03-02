@@ -274,7 +274,7 @@ public class IRCConnectionImpl implements Runnable, IRCConnection {
         connected = false;
         try {
             if (writer != null) {
-                if(SharedGlobalConfig.debugMode.get()) {
+                if (SharedGlobalConfig.debugMode.get()) {
                     logger.info("> QUIT :{}", quitMessage);
                 }
                 writer.write("QUIT :" + quitMessage + "\r\n");
@@ -300,13 +300,13 @@ public class IRCConnectionImpl implements Runnable, IRCConnection {
         try {
             String serverPassword = AuthManager.getServerPassword(getIdentifier());
             if (serverPassword != null && !serverPassword.isEmpty()) {
-                if(SharedGlobalConfig.debugMode.get()) {
+                if (SharedGlobalConfig.debugMode.get()) {
                     logger.info("> PASS ***************");
                 }
                 writer.write("PASS " + serverPassword + "\r\n");
             }
             String user = serverConfig.getBotSettings().ident.get() + " \"\" \"\" :" + serverConfig.getBotSettings().description.get();
-            if(SharedGlobalConfig.debugMode.get()) {
+            if (SharedGlobalConfig.debugMode.get()) {
                 logger.info("> NICK {}", nick);
                 logger.info("> USER {}", user);
             }
@@ -610,7 +610,7 @@ public class IRCConnectionImpl implements Runnable, IRCConnection {
 
     @Override
     public boolean irc(String message) {
-        if(SharedGlobalConfig.debugMode.get() && !disableLogger) {
+        if (SharedGlobalConfig.debugMode.get() && !disableLogger) {
             logger.info("> {}", message);
         }
         return sender.addToSendQueue(message);
@@ -719,7 +719,7 @@ public class IRCConnectionImpl implements Runnable, IRCConnection {
         if (nickServData != null) {
             waitingOnNickServ = true;
             String command = settings.getIdentifyCommand(nickServData.username, nickServData.password);
-            if(SharedGlobalConfig.debugMode.get()) {
+            if (SharedGlobalConfig.debugMode.get()) {
                 logger.info(command.replace(nickServData.password, "***************"));
             }
             disableLogger = true;

@@ -11,19 +11,20 @@ import net.blay09.mods.eirairc.api.irc.IRCMessage;
  */
 public class IRCChannelJoinedEvent extends IRCRawMessageEvent {
 
-	/**
-	 * the channel that was joined
-	 */
-	public final IRCChannel channel;
+    /**
+     * the channel that was joined
+     */
+    public final IRCChannel channel;
 
-	/**
-	 * INTERNAL EVENT. YOU SHOULD NOT POST THIS YOURSELF.
-	 * @param connection the connection the channel that was joined is on
-	 * @param channel the channel that was joined
-	 */
-	public IRCChannelJoinedEvent(IRCConnection connection, IRCMessage rawMessage, IRCChannel channel) {
-		super(connection, rawMessage);
-		this.channel = channel;
-	}
+    /**
+     * INTERNAL EVENT. YOU SHOULD NOT POST THIS YOURSELF.
+     *
+     * @param connection the connection the channel that was joined is on
+     * @param channel    the channel that was joined
+     */
+    public IRCChannelJoinedEvent(IRCConnection connection, IRCMessage rawMessage, IRCChannel channel) {
+        super(connection, rawMessage);
+        this.channel = channel;
+    }
 
 }

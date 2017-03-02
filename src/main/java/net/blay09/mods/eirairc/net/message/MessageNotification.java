@@ -9,34 +9,34 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 public class MessageNotification implements IMessage {
 
-	private byte typeId;
-	private String text;
-	
-	public MessageNotification() {
-	}
-	
-	public MessageNotification(NotificationType type, String text) {
-		this.typeId = (byte) type.ordinal();
-		this.text = text;
-	}
+    private byte typeId;
+    private String text;
 
-	@Override
-	public void fromBytes(ByteBuf buf) {
-		typeId = buf.readByte();
-		text = ByteBufUtils.readUTF8String(buf);
-	}
+    public MessageNotification() {
+    }
 
-	@Override
-	public void toBytes(ByteBuf buf) {
-		buf.writeByte(typeId);
-		ByteBufUtils.writeUTF8String(buf, text);
-	}
+    public MessageNotification(NotificationType type, String text) {
+        this.typeId = (byte) type.ordinal();
+        this.text = text;
+    }
 
-	public byte getNotificationType() {
-		return typeId;
-	}
-	
-	public String getText() {
-		return text;
-	}
+    @Override
+    public void fromBytes(ByteBuf buf) {
+        typeId = buf.readByte();
+        text = ByteBufUtils.readUTF8String(buf);
+    }
+
+    @Override
+    public void toBytes(ByteBuf buf) {
+        buf.writeByte(typeId);
+        ByteBufUtils.writeUTF8String(buf, text);
+    }
+
+    public byte getNotificationType() {
+        return typeId;
+    }
+
+    public String getText() {
+        return text;
+    }
 }

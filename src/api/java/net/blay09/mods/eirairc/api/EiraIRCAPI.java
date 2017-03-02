@@ -9,94 +9,99 @@ import net.minecraft.command.ICommandSender;
 
 public class EiraIRCAPI {
 
-	private static InternalMethods internalMethods;
-	private static IChatHandler chatHandler;
+    private static InternalMethods internalMethods;
+    private static IChatHandler chatHandler;
 
-	/**
-	 * INTERNAL METHOD. DO NOT CALL.
-	 * @param internalMethods implementation of internal API methods
-	 */
-	public static void internalSetupAPI(InternalMethods internalMethods) {
-		if(EiraIRCAPI.internalMethods != null) {
-			throw new RuntimeException("EiraIRC API is already initialized");
-		}
-		EiraIRCAPI.internalMethods = internalMethods;
-	}
+    /**
+     * INTERNAL METHOD. DO NOT CALL.
+     *
+     * @param internalMethods implementation of internal API methods
+     */
+    public static void internalSetupAPI(InternalMethods internalMethods) {
+        if (EiraIRCAPI.internalMethods != null) {
+            throw new RuntimeException("EiraIRC API is already initialized");
+        }
+        EiraIRCAPI.internalMethods = internalMethods;
+    }
 
-	/**
-	 * Registers an alternate chat handler all messages coming from EiraIRC will pass through.
-	 * @param chatHandler an implementation of the IChatHandler interface
-	 */
-	public static void setChatHandler(IChatHandler chatHandler) {
-		EiraIRCAPI.chatHandler = chatHandler;
-	}
+    /**
+     * Registers an alternate chat handler all messages coming from EiraIRC will pass through.
+     *
+     * @param chatHandler an implementation of the IChatHandler interface
+     */
+    public static void setChatHandler(IChatHandler chatHandler) {
+        EiraIRCAPI.chatHandler = chatHandler;
+    }
 
-	/**
-	 * Returns the chat handler to be used by EiraIRC. Use this to add chat messages that belong to a specific IRC context.
-	 * @return an implementation of the IChatHandler interface
-	 */
-	public static IChatHandler getChatHandler() {
-		return chatHandler;
-	}
+    /**
+     * Returns the chat handler to be used by EiraIRC. Use this to add chat messages that belong to a specific IRC context.
+     *
+     * @return an implementation of the IChatHandler interface
+     */
+    public static IChatHandler getChatHandler() {
+        return chatHandler;
+    }
 
-	/**
-	 * Registers the sub-command to EiraIRC's /irc and /sirc commands.
-	 * @param command the class implementing the command
-	 */
-	public static void registerSubCommand(SubCommand command) {
-		internalMethods.registerSubCommand(command);
-	}
+    /**
+     * Registers the sub-command to EiraIRC's /irc and /sirc commands.
+     *
+     * @param command the class implementing the command
+     */
+    public static void registerSubCommand(SubCommand command) {
+        internalMethods.registerSubCommand(command);
+    }
 
-	/**
-	 * Registers the upload hoster to EiraIRC's upload manager so that it can be used for screenshot uploading.
-	 * @param uploadHoster the class implementing the hoster
-	 */
-	public static void registerUploadHoster(UploadHoster uploadHoster) {
-		internalMethods.registerUploadHoster(uploadHoster);
-	}
+    /**
+     * Registers the upload hoster to EiraIRC's upload manager so that it can be used for screenshot uploading.
+     *
+     * @param uploadHoster the class implementing the hoster
+     */
+    public static void registerUploadHoster(UploadHoster uploadHoster) {
+        internalMethods.registerUploadHoster(uploadHoster);
+    }
 
-	/**
-	 * @param parentContext the context to search for contextPath in or null
-	 * @param contextPath the path to an IRC context (e.g. irc.esper.net/#EiraIRC)
-	 * @param expectedType the expected return type or null for any
-	 * @return an IRC context or a context of type Error with the error message as it's name
-	 */
-	public static IRCContext parseContext(IRCContext parentContext, String contextPath, IRCContext.ContextType expectedType) {
-		return internalMethods.parseContext(parentContext, contextPath, expectedType);
-	}
+    /**
+     * @param parentContext the context to search for contextPath in or null
+     * @param contextPath   the path to an IRC context (e.g. irc.esper.net/#EiraIRC)
+     * @param expectedType  the expected return type or null for any
+     * @return an IRC context or a context of type Error with the error message as it's name
+     */
+    public static IRCContext parseContext(IRCContext parentContext, String contextPath, IRCContext.ContextType expectedType) {
+        return internalMethods.parseContext(parentContext, contextPath, expectedType);
+    }
 
-	/**
-	 * @param serverHost an IRC server address (without the port)
-	 * @return true if EiraIRC is connected to the given host
-	 */
-	public static boolean isConnectedTo(String serverHost) {
-		return internalMethods.isConnectedTo(serverHost);
-	}
+    /**
+     * @param serverHost an IRC server address (without the port)
+     * @return true if EiraIRC is connected to the given host
+     */
+    public static boolean isConnectedTo(String serverHost) {
+        return internalMethods.isConnectedTo(serverHost);
+    }
 
-	/**
-	 * @param user the player to be checked
-	 * @return true if the player has EiraIRC installed on the client-side
-	 */
-	public static boolean hasClientSideInstalled(ICommandSender user) {
-		return internalMethods.hasClientSideInstalled(user);
-	}
+    /**
+     * @param user the player to be checked
+     * @return true if the player has EiraIRC installed on the client-side
+     */
+    public static boolean hasClientSideInstalled(ICommandSender user) {
+        return internalMethods.hasClientSideInstalled(user);
+    }
 
-	/**
-	 * @param sender the sender of the message - this is ignored on client-side connections (sender is always the player)
-	 * @param message the message that should be send to IRC
-	 * @param isEmote true if this message should be sent as an ACTION
-	 * @param isNotice true if this message should be sent as a NOTICE
-	 * @param target the target context of this message (either a channel or a user), null means active channel
-	 */
-	public static void relayChat(ICommandSender sender, String message, boolean isEmote, boolean isNotice, IRCContext target) {
-		internalMethods.relayChat(sender, message, isEmote, isNotice, target);
-	}
+    /**
+     * @param sender   the sender of the message - this is ignored on client-side connections (sender is always the player)
+     * @param message  the message that should be send to IRC
+     * @param isEmote  true if this message should be sent as an ACTION
+     * @param isNotice true if this message should be sent as a NOTICE
+     * @param target   the target context of this message (either a channel or a user), null means active channel
+     */
+    public static void relayChat(ICommandSender sender, String message, boolean isEmote, boolean isNotice, IRCContext target) {
+        internalMethods.relayChat(sender, message, isEmote, isNotice, target);
+    }
 
-	public static IConfigManager getSharedGlobalConfig() {
-		return internalMethods.getSharedGlobalConfig();
-	}
+    public static IConfigManager getSharedGlobalConfig() {
+        return internalMethods.getSharedGlobalConfig();
+    }
 
-	public static IConfigManager getClientGlobalConfig() {
-		return internalMethods.getClientGlobalConfig();
-	}
+    public static IConfigManager getClientGlobalConfig() {
+        return internalMethods.getClientGlobalConfig();
+    }
 }

@@ -15,5 +15,4 @@ public class RemoteBotCommand {
     public static RemoteBotCommand loadFromJson(JsonObject obj) {
         return new RemoteBotCommand(obj.get("name").getAsString(), !obj.has("requireAuth") || obj.get("requireAuth").getAsBoolean());
     }
-
 }

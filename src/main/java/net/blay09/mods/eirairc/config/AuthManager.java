@@ -42,7 +42,7 @@ public class AuthManager {
     }
 
     public static void putServerPassword(String identifier, String password) {
-        if(password == null || password.isEmpty()) {
+        if (password == null || password.isEmpty()) {
             serverPasswords.remove(identifier);
         } else {
             serverPasswords.put(identifier, password);
@@ -51,7 +51,7 @@ public class AuthManager {
     }
 
     public static void putNickServData(String identifier, String username, String password) {
-        if(username == null || password == null || username.isEmpty() || password.isEmpty()) {
+        if (username == null || password == null || username.isEmpty() || password.isEmpty()) {
             nickServPasswords.remove(identifier);
         } else {
             nickServPasswords.put(identifier, new NickServData(username, password));
@@ -60,7 +60,7 @@ public class AuthManager {
     }
 
     public static void putChannelPassword(String identifier, String password) {
-        if(password == null || password.isEmpty()) {
+        if (password == null || password.isEmpty()) {
             channelPasswords.remove(identifier);
         } else {
             channelPasswords.put(identifier, password);
@@ -78,15 +78,15 @@ public class AuthManager {
             Gson gson = new Gson();
             JsonObject object = gson.fromJson(new FileReader(authFile), JsonObject.class);
             JsonObject servers = object.getAsJsonObject("servers");
-            for(Map.Entry<String, JsonElement> entry : servers.entrySet()) {
+            for (Map.Entry<String, JsonElement> entry : servers.entrySet()) {
                 serverPasswords.put(entry.getKey(), entry.getValue().getAsString());
             }
             JsonObject channels = object.getAsJsonObject("channels");
-            for(Map.Entry<String, JsonElement> entry : channels.entrySet()) {
+            for (Map.Entry<String, JsonElement> entry : channels.entrySet()) {
                 channelPasswords.put(entry.getKey(), entry.getValue().getAsString());
             }
             JsonObject nickserv = object.getAsJsonObject("nickserv");
-            for(Map.Entry<String, JsonElement> entry : nickserv.entrySet()) {
+            for (Map.Entry<String, JsonElement> entry : nickserv.entrySet()) {
                 JsonObject obj = entry.getValue().getAsJsonObject();
                 nickServPasswords.put(entry.getKey(), new NickServData(obj.get("username").getAsString(), obj.get("password").getAsString()));
             }
@@ -98,17 +98,17 @@ public class AuthManager {
     public static void save() {
         JsonObject root = new JsonObject();
         JsonObject servers = new JsonObject();
-        for(Map.Entry<String, String> entry : serverPasswords.entrySet()) {
+        for (Map.Entry<String, String> entry : serverPasswords.entrySet()) {
             servers.add(entry.getKey(), new JsonPrimitive(entry.getValue()));
         }
         root.add("servers", servers);
         JsonObject channels = new JsonObject();
-        for(Map.Entry<String, String> entry : channelPasswords.entrySet()) {
+        for (Map.Entry<String, String> entry : channelPasswords.entrySet()) {
             channels.add(entry.getKey(), new JsonPrimitive(entry.getValue()));
         }
         root.add("channels", channels);
         JsonObject nickserv = new JsonObject();
-        for(Map.Entry<String, NickServData> entry : nickServPasswords.entrySet()) {
+        for (Map.Entry<String, NickServData> entry : nickServPasswords.entrySet()) {
             JsonObject obj = new JsonObject();
             obj.add("username", new JsonPrimitive(entry.getValue().username));
             obj.add("password", new JsonPrimitive(entry.getValue().password));

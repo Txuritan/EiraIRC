@@ -11,16 +11,11 @@ import net.blay09.mods.eirairc.config.SharedGlobalConfig;
 import net.blay09.mods.eirairc.net.NetworkHandler;
 import net.blay09.mods.eirairc.net.message.MessageNotification;
 import net.blay09.mods.eirairc.util.NotificationType;
-import net.blay09.mods.eirairc.util.Utils;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.crash.CrashReport;
-import net.minecraft.event.ClickEvent;
-import net.minecraft.event.HoverEvent;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ReportedException;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -81,14 +76,14 @@ public class CommonProxy {
 
     public void handleException(IRCConnection connection, Exception e) {
         EiraIRC.logger.error("Encountered an unexpected exception", e);
-        CrashReport report = MinecraftServer.getServer().addServerInfoToCrashReport(new CrashReport("Exception in IRC Connection " + connection.getHost(), e));
-        File file1 = new File(new File(MinecraftServer.getServer().getDataDirectory(), "crash-reports"), "crash-" + (new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss")).format(new Date()) + "-server.txt");
+        CrashReport report = FMLCommonHandler.instance().getMinecraftServerInstance().addServerInfoToCrashReport(new CrashReport("Exception in IRC Connection " + connection.getHost(), e));
+        File file1 = new File(new File(FMLCommonHandler.instance().getMinecraftServerInstance().getDataDirectory(), "crash-reports"), "crash-" + (new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss")).format(new Date()) + "-server.txt");
         if (report.saveToFile(file1)) {
             EiraIRC.logger.error("This crash report has been saved to: " + file1.getAbsolutePath());
         } else {
             EiraIRC.logger.error("We were unable to save this crash report to disk.");
         }
-        MinecraftServer.getServer().stopServer();
+        FMLCommonHandler.instance().getMinecraftServerInstance().stopServer();
     }
 
     @SubscribeEvent
@@ -101,6 +96,6 @@ public class CommonProxy {
     }
 
     public void addScheduledTask(Runnable runnable) {
-        MinecraftServer.getServer().addScheduledTask(runnable);
+        FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(runnable);
     }
 }

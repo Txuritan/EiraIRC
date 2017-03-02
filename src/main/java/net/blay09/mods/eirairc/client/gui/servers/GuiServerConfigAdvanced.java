@@ -68,7 +68,7 @@ public class GuiServerConfigAdvanced extends GuiTabPage implements GuiYesNoCallb
         } else {
             oldText = config.getAddress();
         }
-        txtAddress = new GuiAdvancedTextField(0, fontRendererObj, leftX, topY + 15, 100, 15);
+        txtAddress = new GuiAdvancedTextField(0, fontRenderer, leftX, topY + 15, 100, 15);
         txtAddress.setEnabled(!isConnected);
         txtAddress.setText(oldText);
         textFieldList.add(txtAddress);
@@ -80,7 +80,7 @@ public class GuiServerConfigAdvanced extends GuiTabPage implements GuiYesNoCallb
         } else {
             oldText = config.getNick();
         }
-        txtNick = new GuiAdvancedTextField(1, fontRendererObj, leftX, topY + 55, 100, 15);
+        txtNick = new GuiAdvancedTextField(1, fontRenderer, leftX, topY + 55, 100, 15);
         txtNick.setDefaultText(Globals.DEFAULT_NICK, false);
         txtNick.setText(oldText);
         textFieldList.add(txtNick);
@@ -93,7 +93,7 @@ public class GuiServerConfigAdvanced extends GuiTabPage implements GuiYesNoCallb
         } else {
             oldText = nickServData != null ? nickServData.username : "";
         }
-        txtNickServName = new GuiAdvancedTextField(2, fontRendererObj, leftX, topY + 95, 100, 15);
+        txtNickServName = new GuiAdvancedTextField(2, fontRenderer, leftX, topY + 95, 100, 15);
         txtNickServName.setText(oldText);
         textFieldList.add(txtNickServName);
 
@@ -104,7 +104,7 @@ public class GuiServerConfigAdvanced extends GuiTabPage implements GuiYesNoCallb
         } else {
             oldText = nickServData != null ? nickServData.password : "";
         }
-        txtNickServPassword = new GuiAdvancedTextField(3, fontRendererObj, leftX, topY + 135, 100, 15);
+        txtNickServPassword = new GuiAdvancedTextField(3, fontRenderer, leftX, topY + 135, 100, 15);
         txtNickServPassword.setText(oldText);
         txtNickServPassword.setDefaultPasswordChar();
         textFieldList.add(txtNickServPassword);
@@ -116,7 +116,7 @@ public class GuiServerConfigAdvanced extends GuiTabPage implements GuiYesNoCallb
         } else {
             oldText = AuthManager.getServerPassword(config.getIdentifier());
         }
-        txtServerPassword = new GuiAdvancedTextField(4, fontRendererObj, rightX - 100, topY + 15, 100, 15);
+        txtServerPassword = new GuiAdvancedTextField(4, fontRenderer, rightX - 100, topY + 15, 100, 15);
         txtServerPassword.setEnabled(!isConnected);
         txtServerPassword.setText(oldText);
         txtServerPassword.setEnabled(!isConnected);
@@ -130,7 +130,7 @@ public class GuiServerConfigAdvanced extends GuiTabPage implements GuiYesNoCallb
         } else {
             oldText = config.getCharset();
         }
-        txtCharset = new GuiAdvancedTextField(5, fontRendererObj, rightX - 100, topY + 55, 100, 15);
+        txtCharset = new GuiAdvancedTextField(5, fontRenderer, rightX - 100, topY + 55, 100, 15);
         txtCharset.setEnabled(!isConnected);
         txtCharset.setDefaultText(Globals.DEFAULT_CHARSET, false);
         txtCharset.setEnabled(!isConnected);

@@ -22,10 +22,10 @@ import net.blay09.mods.eirairc.util.Globals;
 import net.blay09.mods.eirairc.util.Utils;
 import net.minecraft.command.CommandHandler;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -75,15 +75,16 @@ public class EiraIRC {
 
         EiraIRCAPI.internalSetupAPI(new InternalMethodsImpl());
         EiraIRCAPI.setChatHandler(new IChatHandler() {
+
             @Override
-            public void addChatMessage(IChatComponent component, IRCContext source) {
+            public void addChatMessage(ITextComponent component, IRCContext source) {
                 addChatMessage(null, component, source);
             }
 
             @Override
-            public void addChatMessage(ICommandSender receiver, IChatComponent component, IRCContext source) {
+            public void addChatMessage(ICommandSender receiver, ITextComponent component, IRCContext source) {
                 if (receiver != null) {
-                    receiver.addChatMessage(component);
+                    receiver.sendMessage(component);
                 } else {
                     Utils.addMessageToChat(component);
                 }
@@ -101,32 +102,32 @@ public class EiraIRC {
     public void serverLoad(FMLServerStartingEvent event) {
         registerCommands((CommandHandler) event.getServer().getCommandManager(), true);
 
-        if (!MinecraftServer.getServer().isSinglePlayer()) {
+        if (!FMLCommonHandler.instance().getMinecraftServerInstance().getServer().isSinglePlayer()) {
             ConnectionManager.startIRC();
         }
     }
 
     @EventHandler
     public void serverStop(FMLServerStoppingEvent event) {
-        if (!MinecraftServer.getServer().isSinglePlayer()) {
+        if (!FMLCommonHandler.instance().getMinecraftServerInstance().getServer().isSinglePlayer()) {
             ConnectionManager.stopIRC();
         }
     }
 
     @SubscribeEvent
     public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-        if (event.modID.equals(Globals.MOD_ID)) {
-            if (event.configID.equals("global")) {
+        if (event.getModID().equals(Globals.MOD_ID)) {
+            if (event.getConfigID().equals("global")) {
                 ConfigurationHandler.lightReload();
                 proxy.saveConfig();
-            } else if (event.configID.startsWith("server:")) {
-                ServerConfig serverConfig = ConfigurationHandler.getOrCreateServerConfig(event.configID.substring(7));
+            } else if (event.getConfigID().startsWith("server:")) {
+                ServerConfig serverConfig = ConfigurationHandler.getOrCreateServerConfig(event.getConfigID().substring(7));
                 serverConfig.getTheme().pushDummyConfig();
                 serverConfig.getBotSettings().pushDummyConfig();
                 serverConfig.getGeneralSettings().pushDummyConfig();
                 ConfigurationHandler.saveServers();
-            } else if (event.configID.startsWith("channel:")) {
-                ChannelConfig channelConfig = ConfigHelper.resolveChannelConfig(event.configID.substring(8));
+            } else if (event.getConfigID().startsWith("channel:")) {
+                ChannelConfig channelConfig = ConfigHelper.resolveChannelConfig(event.getConfigID().substring(8));
                 if (channelConfig != null) {
                     channelConfig.getTheme().pushDummyConfig();
                     channelConfig.getBotSettings().pushDummyConfig();

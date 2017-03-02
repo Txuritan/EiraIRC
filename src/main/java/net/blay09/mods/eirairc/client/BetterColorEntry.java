@@ -2,24 +2,24 @@ package net.blay09.mods.eirairc.client;
 
 import net.blay09.mods.eirairc.util.IRCFormatting;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.config.GuiConfig;
 import net.minecraftforge.fml.client.config.GuiConfigEntries;
 import net.minecraftforge.fml.client.config.IConfigElement;
 
 public class BetterColorEntry extends GuiConfigEntries.ListEntryBase {
 
-    private static EnumChatFormatting[] chatFormatting = EnumChatFormatting.values();
+    private static TextFormatting[] chatFormatting = TextFormatting.values();
 
-    private EnumChatFormatting beforeValue;
-    private EnumChatFormatting currentValue;
+    private TextFormatting beforeValue;
+    private TextFormatting currentValue;
     private int lastRenderY;
 
     public BetterColorEntry(GuiConfig owningScreen, GuiConfigEntries owningEntryList, IConfigElement configElement) {
         super(owningScreen, owningEntryList, configElement);
         this.beforeValue = IRCFormatting.getColorFromName((configElement.get().toString()));
-        if(beforeValue == null) {
-            beforeValue = EnumChatFormatting.WHITE;
+        if (beforeValue == null) {
+            beforeValue = TextFormatting.WHITE;
         }
         this.currentValue = beforeValue;
     }
@@ -33,8 +33,8 @@ public class BetterColorEntry extends GuiConfigEntries.ListEntryBase {
     public void setToDefault() {
         if (enabled()) {
             currentValue = IRCFormatting.getColorFromName(configElement.getDefault().toString());
-            if(currentValue == null) {
-                currentValue = EnumChatFormatting.WHITE;
+            if (currentValue == null) {
+                currentValue = TextFormatting.WHITE;
             }
         }
     }
@@ -85,7 +85,7 @@ public class BetterColorEntry extends GuiConfigEntries.ListEntryBase {
         }
         GuiContainer.drawRect(owningEntryList.controlX, y + 3, owningEntryList.controlX + owningEntryList.controlWidth, y + 3 + slotHeight - 6, getIntColorFromIndex(0) | (128 << 24));
         String s = currentValue.toString() + "Example Text";
-        mc.fontRendererObj.drawString(s, owningScreen.entryList.controlX + owningEntryList.controlWidth / 2 - mc.fontRendererObj.getStringWidth(s) / 2, y + slotHeight / 2 - mc.fontRendererObj.FONT_HEIGHT / 2, -1, true);
+        mc.fontRenderer.drawString(s, owningScreen.entryList.controlX + owningEntryList.controlWidth / 2 - mc.fontRenderer.getStringWidth(s) / 2, y + slotHeight / 2 - mc.fontRenderer.FONT_HEIGHT / 2, -1, true);
     }
 
     @Override
@@ -110,13 +110,13 @@ public class BetterColorEntry extends GuiConfigEntries.ListEntryBase {
     }
 
     @Override
-    public EnumChatFormatting getCurrentValue() {
+    public TextFormatting getCurrentValue() {
         return currentValue;
     }
 
     @Override
-    public EnumChatFormatting[] getCurrentValues() {
-        return new EnumChatFormatting[]{currentValue};
+    public TextFormatting[] getCurrentValues() {
+        return new TextFormatting[]{ currentValue };
     }
 
     private static int getIntColorFromIndex(int colorIndex) {

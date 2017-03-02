@@ -32,7 +32,7 @@ public class GuiErrorScreen extends EiraGuiScreen {
 
     @Override
     protected void actionPerformed(GuiButton button) {
-        if(button == btnClipboard) {
+        if (button == btnClipboard) {
             StringWriter sw = new StringWriter();
             PrintWriter writer = new PrintWriter(sw);
             exception.printStackTrace(writer);

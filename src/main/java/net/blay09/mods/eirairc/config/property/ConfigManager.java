@@ -12,7 +12,7 @@ import net.blay09.mods.eirairc.api.config.StringList;
 import net.blay09.mods.eirairc.config.SharedGlobalConfig;
 import net.blay09.mods.eirairc.util.I19n;
 import net.blay09.mods.eirairc.util.IRCFormatting;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import org.apache.commons.lang3.StringUtils;
@@ -104,12 +104,12 @@ public class ConfigManager implements IConfigManager {
                 if (value.length > 0) {
                     property.set(new StringList(value));
                 }
-            } else if (type.getClass() == EnumChatFormatting.class) {
-                String stringValue = config.getString(property.getName(), property.getCategory(), IRCFormatting.getNameFromColor((EnumChatFormatting) property.getDefaultValue()), I19n.format(property.getLangKey() + ".tooltip"), IRCFormatting.mcColorNames, property.getLangKey());
+            } else if (type.getClass() == TextFormatting.class) {
+                String stringValue = config.getString(property.getName(), property.getCategory(), IRCFormatting.getNameFromColor((TextFormatting) property.getDefaultValue()), I19n.format(property.getLangKey() + ".tooltip"), IRCFormatting.mcColorNames, property.getLangKey());
                 if (stringValue.isEmpty()) {
                     continue;
                 }
-                EnumChatFormatting color = IRCFormatting.getColorFromName(stringValue);
+                TextFormatting color = IRCFormatting.getColorFromName(stringValue);
                 if (color != null) {
                     if (!ignoreDefaultValues || !color.equals(property.getDefaultValue())) {
                         property.set(color);
@@ -159,8 +159,8 @@ public class ConfigManager implements IConfigManager {
                 getProperty(config, property).set((Float) value);
             } else if (value.getClass() == StringList.class) {
                 getProperty(config, property).set(((StringList) value).getAsArray());
-            } else if (value.getClass() == EnumChatFormatting.class) {
-                getProperty(config, property).set(IRCFormatting.getNameFromColor((EnumChatFormatting) value));
+            } else if (value.getClass() == TextFormatting.class) {
+                getProperty(config, property).set(IRCFormatting.getNameFromColor((TextFormatting) value));
             } else if (value instanceof Enum) {
                 Enum[] enums = ((Enum) value).getClass().getEnumConstants();
                 String[] validValues = new String[enums.length];
@@ -184,8 +184,8 @@ public class ConfigManager implements IConfigManager {
             return config.get(property.getCategory(), property.getName(), (Float) property.getDefaultValue(), I19n.format(property.getLangKey() + ".tooltip"));
         } else if (value.getClass() == StringList.class) {
             return config.get(property.getCategory(), property.getName(), ((StringList) property.getDefaultValue()).getAsArray(), I19n.format(property.getLangKey() + ".tooltip"));
-        } else if (value.getClass() == EnumChatFormatting.class) {
-            Property prop = config.get(property.getCategory(), property.getName(), IRCFormatting.getNameFromColor((EnumChatFormatting) property.getDefaultValue()), I19n.format(property.getLangKey() + ".tooltip"), IRCFormatting.mcColorNames);
+        } else if (value.getClass() == TextFormatting.class) {
+            Property prop = config.get(property.getCategory(), property.getName(), IRCFormatting.getNameFromColor((TextFormatting) property.getDefaultValue()), I19n.format(property.getLangKey() + ".tooltip"), IRCFormatting.mcColorNames);
             prop.setConfigEntryClass(colorGuiClass);
             return prop;
         } else if (value instanceof Enum) {
@@ -238,8 +238,8 @@ public class ConfigManager implements IConfigManager {
                 list.remove(value.substring(7));
             }
             property.set(list);
-        } else if (type.getClass() == EnumChatFormatting.class) {
-            EnumChatFormatting color = IRCFormatting.getColorFromName(value);
+        } else if (type.getClass() == TextFormatting.class) {
+            TextFormatting color = IRCFormatting.getColorFromName(value);
             if (color != null) {
                 property.set(color);
             } else {
@@ -284,8 +284,8 @@ public class ConfigManager implements IConfigManager {
                 dummyProperty = dummyConfig.get(property.getCategory(), property.getName(), (Float) property.getDefaultValue(), I19n.format(property.getLangKey() + ".tooltip"));
             } else if (type.getClass() == StringList.class) {
                 dummyProperty = dummyConfig.get(property.getCategory(), property.getName(), ((StringList) property.getDefaultValue()).getAsArray(), I19n.format(property.getLangKey() + ".tooltip"));
-            } else if (type.getClass() == EnumChatFormatting.class) {
-                dummyProperty = dummyConfig.get(property.getCategory(), property.getName(), IRCFormatting.getNameFromColor((EnumChatFormatting) property.getDefaultValue()), I19n.format(property.getLangKey() + ".tooltip"));
+            } else if (type.getClass() == TextFormatting.class) {
+                dummyProperty = dummyConfig.get(property.getCategory(), property.getName(), IRCFormatting.getNameFromColor((TextFormatting) property.getDefaultValue()), I19n.format(property.getLangKey() + ".tooltip"));
             } else if (type instanceof Enum) {
                 dummyProperty = dummyConfig.get(property.getCategory(), property.getName(), ((Enum) property.getDefaultValue()).name(), I19n.format(property.getLangKey() + ".tooltip"));
             } else {
@@ -303,9 +303,9 @@ public class ConfigManager implements IConfigManager {
                     dummyProperty.set((Float) property.get());
                 } else if (type.getClass() == StringList.class) {
                     dummyProperty.set(((StringList) property.get()).getAsArray());
-                } else if (type.getClass() == EnumChatFormatting.class) {
+                } else if (type.getClass() == TextFormatting.class) {
                     dummyProperty.setConfigEntryClass(colorGuiClass);
-                    dummyProperty.set(IRCFormatting.getNameFromColor((EnumChatFormatting) property.get()));
+                    dummyProperty.set(IRCFormatting.getNameFromColor((TextFormatting) property.get()));
                 } else if (type.getClass() == Enum.class) {
                     dummyProperty.set(((Enum) property.get()).name());
                 }
@@ -336,12 +336,12 @@ public class ConfigManager implements IConfigManager {
                     stringList.add(stringArray.get(i).getAsString());
                 }
                 property.set(stringList);
-            } else if (type.getClass() == EnumChatFormatting.class) {
+            } else if (type.getClass() == TextFormatting.class) {
                 String stringValue = object.get(property.getName()).getAsString();
                 if (stringValue.isEmpty()) {
                     continue;
                 }
-                EnumChatFormatting color = IRCFormatting.getColorFromName(stringValue);
+                TextFormatting color = IRCFormatting.getColorFromName(stringValue);
                 if (color != null) {
                     property.set(color);
                 } else {

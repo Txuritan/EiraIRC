@@ -6,7 +6,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +14,11 @@ import java.util.List;
 public class OverlayJoinLeave extends Gui {
 
     private static class JoinLeaveMessage {
-        public final IChatComponent chatComponent;
+        public final ITextComponent chatComponent;
         public int y;
         public float timeLeft;
 
-        public JoinLeaveMessage(IChatComponent chatComponent, int y, float timeLeft) {
+        public JoinLeaveMessage(ITextComponent chatComponent, int y, float timeLeft) {
             this.chatComponent = chatComponent;
             this.y = y;
             this.timeLeft = timeLeft;
@@ -44,8 +44,8 @@ public class OverlayJoinLeave extends Gui {
         this.scale = scale;
     }
 
-    public void addMessage(IChatComponent component) {
-        if(visibleTime == null) {
+    public void addMessage(ITextComponent component) {
+        if (visibleTime == null) {
             return;
         }
         for (JoinLeaveMessage message : messages) {
@@ -55,7 +55,7 @@ public class OverlayJoinLeave extends Gui {
     }
 
     public void updateAndRender(float renderTickTime) {
-        if(scale == null) {
+        if (scale == null) {
             return;
         }
         ScaledResolution resolution = new ScaledResolution(mc);
@@ -66,14 +66,14 @@ public class OverlayJoinLeave extends Gui {
         GlStateManager.translate(guiLeft, guiTop, 0f);
         GlStateManager.scale(scale.get(), scale.get(), 1f);
         GlStateManager.enableBlend();
-        for(int i = messages.size() - 1; i >= 0; i--) {
+        for (int i = messages.size() - 1; i >= 0; i--) {
             JoinLeaveMessage message = messages.get(i);
             message.timeLeft -= renderTickTime;
             int alpha = 255;
-            if(message.timeLeft < visibleTime.get() / 5f) {
+            if (message.timeLeft < visibleTime.get() / 5f) {
                 alpha = (int) Math.max(11, (255f * (message.timeLeft / (visibleTime.get() / 5f))));
             }
-            if(message.timeLeft <= 0) {
+            if (message.timeLeft <= 0) {
                 messages.remove(i);
             }
             String formattedText = message.chatComponent.getFormattedText();

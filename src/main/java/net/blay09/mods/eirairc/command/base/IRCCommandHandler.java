@@ -17,8 +17,9 @@ import net.minecraft.command.CommandHandler;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
@@ -105,7 +106,7 @@ public class IRCCommandHandler {
         SubCommandWrapper cmd = commands.get(args[0]);
         if (cmd != null) {
             String[] shiftedArgs = ArrayUtils.subarray(args, 1, args.length);
-            return cmd.addTabCompletionOptions(sender, shiftedArgs, pos);
+            return cmd.getTabCompletions(FMLCommonHandler.instance().getMinecraftServerInstance(),sender, shiftedArgs, pos);
         }
         return null;
     }
@@ -116,7 +117,7 @@ public class IRCCommandHandler {
             sendUsageHelp(sender);
             return false;
         }
-        if (!cmd.canCommandSenderUseCommand(sender)) {
+        if (!cmd.checkPermission(FMLCommonHandler.instance().getMinecraftServerInstance(), sender)) {
             ChatComponentBuilder.create().color('c').lang("commands.generic.permission").send(sender);
             return true;
         }
@@ -143,7 +144,7 @@ public class IRCCommandHandler {
                 ccb.color('c').lang("commands.generic.usage", ccb.push().lang(e.getMessage(), e.getErrorObjects()).pop()).send(sender);
                 return true;
             } catch (CommandException e) {
-                sender.addChatMessage(new ChatComponentText(e.getMessage()));
+                sender.sendMessage(new TextComponentString(e.getMessage()));
                 return true;
             }
         }

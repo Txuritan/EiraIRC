@@ -16,7 +16,8 @@ public class IRCReconnectEvent extends IRCEvent {
 
     /**
      * INTERNAL EVENT. YOU SHOULD NOT POST THIS YOURSELF.
-     * @param connection the connection that is being reconnected to
+     *
+     * @param connection  the connection that is being reconnected to
      * @param waitingTime the amount of milliseconds EiraIRC will wait before attempting to reconnect
      */
     public IRCReconnectEvent(IRCConnection connection, int waitingTime) {

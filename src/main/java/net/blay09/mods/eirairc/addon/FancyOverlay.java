@@ -6,7 +6,7 @@ import net.blay09.mods.eirairc.client.gui.overlay.OverlayJoinLeave;
 import net.blay09.mods.eirairc.util.ConfigHelper;
 import net.blay09.mods.eirairc.util.MessageFormat;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Event;
@@ -20,7 +20,7 @@ public class FancyOverlay {
     private IConfigProperty<Float> scale;
 
     public FancyOverlay() {
-        overlay = new OverlayJoinLeave(Minecraft.getMinecraft(), Minecraft.getMinecraft().fontRendererObj);
+        overlay = new OverlayJoinLeave(Minecraft.getMinecraft(), Minecraft.getMinecraft().fontRenderer);
 
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -38,7 +38,7 @@ public class FancyOverlay {
 
     @SubscribeEvent
     public void onIRCUserJoin(IRCUserJoinEvent event) {
-        if(enabled.get()) {
+        if (enabled.get()) {
             if (ConfigHelper.getGeneralSettings(event.channel).muted.get() || !ConfigHelper.getBotSettings(event.channel).relayIRCJoinLeave.get()) {
                 return;
             }
@@ -50,7 +50,7 @@ public class FancyOverlay {
 
     @SubscribeEvent
     public void onIRCNickChange(IRCUserNickChangeEvent event) {
-        if(enabled.get()) {
+        if (enabled.get()) {
             if (ConfigHelper.getGeneralSettings(event.user).muted.get() || !ConfigHelper.getBotSettings(event.user).relayNickChanges.get()) {
                 return;
             }
@@ -63,7 +63,7 @@ public class FancyOverlay {
 
     @SubscribeEvent
     public void onIRCUserLeave(IRCUserLeaveEvent event) {
-        if(enabled.get()) {
+        if (enabled.get()) {
             if (ConfigHelper.getGeneralSettings(event.channel).muted.get() || !ConfigHelper.getBotSettings(event.channel).relayIRCJoinLeave.get()) {
                 return;
             }
@@ -75,39 +75,39 @@ public class FancyOverlay {
 
     @SubscribeEvent
     public void onConnectedEvent(IRCConnectEvent event) {
-        if(enabled.get()) {
-            overlay.addMessage(new ChatComponentTranslation("eirairc:general.connected", event.connection.getHost()));
+        if (enabled.get()) {
+            overlay.addMessage(new TextComponentTranslation("eirairc:general.connected", event.connection.getHost()));
             event.setResult(Event.Result.DENY);
         }
     }
 
     @SubscribeEvent
     public void onConnectionFailed(IRCConnectionFailedEvent event) {
-        if(enabled.get()) {
-            overlay.addMessage(new ChatComponentTranslation("eirairc:error.couldNotConnect", event.connection.getHost(), event.exception));
+        if (enabled.get()) {
+            overlay.addMessage(new TextComponentTranslation("eirairc:error.couldNotConnect", event.connection.getHost(), event.exception));
             event.setResult(Event.Result.DENY);
         }
     }
 
     @SubscribeEvent
     public void onReconnecting(IRCReconnectEvent event) {
-        if(enabled.get()) {
-            overlay.addMessage(new ChatComponentTranslation("eirairc:general.reconnecting", event.connection.getHost(), event.waitingTime / 1000));
+        if (enabled.get()) {
+            overlay.addMessage(new TextComponentTranslation("eirairc:general.reconnecting", event.connection.getHost(), event.waitingTime / 1000));
             event.setResult(Event.Result.DENY);
         }
     }
 
     @SubscribeEvent
     public void onDisconnectedEvent(IRCDisconnectEvent event) {
-        if(enabled.get()) {
-            overlay.addMessage(new ChatComponentTranslation("eirairc:general.disconnected", event.connection.getHost()));
+        if (enabled.get()) {
+            overlay.addMessage(new TextComponentTranslation("eirairc:general.disconnected", event.connection.getHost()));
             event.setResult(Event.Result.DENY);
         }
     }
 
     @SubscribeEvent
     public void onIRCUserQuit(IRCUserQuitEvent event) {
-        if(enabled.get()) {
+        if (enabled.get()) {
             if (ConfigHelper.getGeneralSettings(event.user).muted.get() || !ConfigHelper.getBotSettings(event.user).relayIRCJoinLeave.get()) {
                 return;
             }
@@ -119,8 +119,8 @@ public class FancyOverlay {
 
     @SubscribeEvent
     public void renderOverlay(RenderGameOverlayEvent.Post event) {
-        if(event.type == RenderGameOverlayEvent.ElementType.CHAT) {
-            overlay.updateAndRender(event.partialTicks);
+        if (event.getType() == RenderGameOverlayEvent.ElementType.CHAT) {
+            overlay.updateAndRender(event.getPartialTicks());
         }
     }
 

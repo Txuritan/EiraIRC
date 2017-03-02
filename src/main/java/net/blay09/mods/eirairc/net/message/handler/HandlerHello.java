@@ -12,16 +12,16 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class HandlerHello implements IMessageHandler<MessageHello, IMessage> {
 
-	@Override
-	public IMessage onMessage(MessageHello packet, MessageContext ctx) {
-		EiraIRC.proxy.addScheduledTask(() -> {
-            EntityPlayer entityPlayer = ctx.getServerHandler().playerEntity;
+    @Override
+    public IMessage onMessage(MessageHello packet, MessageContext ctx) {
+        EiraIRC.proxy.addScheduledTask(() -> {
+            EntityPlayer entityPlayer = ctx.getServerHandler().player;
 
             EiraPlayerInfo playerInfo = EiraIRC.instance.getNetHandler().getPlayerInfo(entityPlayer.getName());
             playerInfo.modInstalled = true;
             playerInfo.modVersion = packet.getVersion();
         });
-		return null;
-	}
+        return null;
+    }
 
 }

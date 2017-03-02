@@ -3,13 +3,14 @@
 package net.blay09.mods.eirairc.util;
 
 public enum NotificationType {
-	FriendJoined,
-	PlayerMentioned,
-	PrivateMessage;
+    FriendJoined,
+    PlayerMentioned,
+    PrivateMessage;
 
-	private static final NotificationType[] values = values();
-	public static NotificationType fromId(int id) {
-		return values[id];
-	}
+    private static final NotificationType[] values = values();
+
+    public static NotificationType fromId(int id) {
+        return values[id];
+    }
 
 }

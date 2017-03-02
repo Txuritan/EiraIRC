@@ -10,26 +10,27 @@ import net.blay09.mods.eirairc.api.irc.IRCMessage;
  */
 public class IRCErrorEvent extends IRCRawMessageEvent {
 
-	/**
-	 * the numeric error code
-	 */
-	public final int numeric;
+    /**
+     * the numeric error code
+     */
+    public final int numeric;
 
-	/**
-	 * the arguments sent along with the error
-	 */
-	public final String[] args;
+    /**
+     * the arguments sent along with the error
+     */
+    public final String[] args;
 
-	/**
-	 * INTERNAL EVENT. YOU SHOULD NOT POST THIS YOURSELF.
-	 * @param connection the connection that was disconnected
-	 * @param numeric the numeric error code
-	 * @param args the arguments sent along with the error
-	 */
-	public IRCErrorEvent(IRCConnection connection, IRCMessage rawMessage, int numeric, String[] args) {
-		super(connection, rawMessage);
-		this.numeric = numeric;
-		this.args = args;
-	}
+    /**
+     * INTERNAL EVENT. YOU SHOULD NOT POST THIS YOURSELF.
+     *
+     * @param connection the connection that was disconnected
+     * @param numeric    the numeric error code
+     * @param args       the arguments sent along with the error
+     */
+    public IRCErrorEvent(IRCConnection connection, IRCMessage rawMessage, int numeric, String[] args) {
+        super(connection, rawMessage);
+        this.numeric = numeric;
+        this.args = args;
+    }
 
 }

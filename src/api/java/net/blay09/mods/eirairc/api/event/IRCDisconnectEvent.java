@@ -9,12 +9,13 @@ import net.blay09.mods.eirairc.api.irc.IRCConnection;
  */
 public class IRCDisconnectEvent extends IRCEvent {
 
-	/**
-	 * INTERNAL EVENT. YOU SHOULD NOT POST THIS YOURSELF.
-	 * @param connection the connection that was disconnected
-	 */
-	public IRCDisconnectEvent(IRCConnection connection) {
-		super(connection);
-	}
+    /**
+     * INTERNAL EVENT. YOU SHOULD NOT POST THIS YOURSELF.
+     *
+     * @param connection the connection that was disconnected
+     */
+    public IRCDisconnectEvent(IRCConnection connection) {
+        super(connection);
+    }
 
 }

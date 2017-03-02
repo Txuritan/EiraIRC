@@ -34,7 +34,7 @@ public class Compatibility {
         }
 
         MinecraftForge.EVENT_BUS.post(new InitConfigEvent.SharedGlobalSettings(SharedGlobalConfig.manager));
-        if(EiraIRC.proxy.getClientGlobalConfig() != null) {
+        if (EiraIRC.proxy.getClientGlobalConfig() != null) {
             MinecraftForge.EVENT_BUS.post(new InitConfigEvent.ClientGlobalSettings(EiraIRC.proxy.getClientGlobalConfig()));
         }
         MinecraftForge.EVENT_BUS.post(new InitConfigEvent.GeneralSettings(SharedGlobalConfig.generalSettings.manager));

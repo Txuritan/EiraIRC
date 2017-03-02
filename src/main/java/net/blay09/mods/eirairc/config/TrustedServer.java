@@ -14,10 +14,10 @@ public class TrustedServer {
 
     public static TrustedServer loadFromJson(JsonObject object) {
         TrustedServer server = new TrustedServer(object.get("address").getAsString());
-        if(object.has("allowRedirect")) {
+        if (object.has("allowRedirect")) {
             server.allowRedirect = object.get("allowRedirect").getAsBoolean();
         }
-        if(object.has("redirectSolo")) {
+        if (object.has("redirectSolo")) {
             server.redirectSolo = object.get("redirectSolo").getAsBoolean();
         }
         return server;

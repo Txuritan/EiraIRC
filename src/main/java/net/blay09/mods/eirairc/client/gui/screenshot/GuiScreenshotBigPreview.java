@@ -13,39 +13,39 @@ import java.net.URL;
 
 public class GuiScreenshotBigPreview extends EiraGuiScreen {
 
-	private final GuiImage image;
+    private final GuiImage image;
 
-	public GuiScreenshotBigPreview(GuiScreen parentScreen, URL url) {
-		super(parentScreen);
-		image = new GuiURLImage(url);
-		image.loadTexture();
-	}
+    public GuiScreenshotBigPreview(GuiScreen parentScreen, URL url) {
+        super(parentScreen);
+        image = new GuiURLImage(url);
+        image.loadTexture();
+    }
 
-	public GuiScreenshotBigPreview(GuiScreen parentScreen, Screenshot screenshot) {
-		super(parentScreen);
-		image = new GuiFileImage(screenshot.getFile());
-		image.loadTexture();
-	}
+    public GuiScreenshotBigPreview(GuiScreen parentScreen, Screenshot screenshot) {
+        super(parentScreen);
+        image = new GuiFileImage(screenshot.getFile());
+        image.loadTexture();
+    }
 
-	@Override
-	public boolean mouseClick(int mouseX, int mouseY, int mouseButton) {
-		gotoPrevious();
-		return true;
-	}
+    @Override
+    public boolean mouseClick(int mouseX, int mouseY, int mouseButton) {
+        gotoPrevious();
+        return true;
+    }
 
-	@Override
-	public void onGuiClosed() {
-		super.onGuiClosed();
-		image.dispose();
-	}
+    @Override
+    public void onGuiClosed() {
+        super.onGuiClosed();
+        image.dispose();
+    }
 
-	@Override
-	public void drawScreen(int mouseX, int mouseY, float p_73863_3_) {
-		super.drawScreen(mouseX, mouseY, p_73863_3_);
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float p_73863_3_) {
+        super.drawScreen(mouseX, mouseY, p_73863_3_);
 
-		image.draw(0, 0, width, height, zLevel);
+        image.draw(0, 0, width, height, zLevel);
 
-		String s = I19n.format("eirairc:gui.image.clickToGoBack");
-		drawString(fontRendererObj, s, width - fontRendererObj.getStringWidth(s) - 5, height - fontRendererObj.FONT_HEIGHT - 5, Globals.TEXT_COLOR);
-	}
+        String s = I19n.format("eirairc:gui.image.clickToGoBack");
+        drawString(fontRenderer, s, width - fontRenderer.getStringWidth(s) - 5, height - fontRenderer.FONT_HEIGHT - 5, Globals.TEXT_COLOR);
+    }
 }
