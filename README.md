@@ -8,7 +8,7 @@ Minecraft Mod. On a Minecraft client it acts like any other IRC client, on the s
 * [Minecraft Forum Topic](http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/1291581-eirairc-irc-twitch-screenshots-and-more) for discussion, support and feature requests 
 * [Help and Documentation Page](http://blay09.net/?page_id=63)
 
-## API IS NO LONGER AVAILABLE FROM MAVEN
+## API IS NO LONGER AVAILABLE AND WILL HAVE TO DOWNLOADED MANUALLY
 ##API
 The easiest way to add EiraIRC to your development environment is to do some additions to your build.gradle file. First, register EiraIRC's maven repository by adding the following lines:
 
