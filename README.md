@@ -1,6 +1,10 @@
 EiraIRC
 =======
 
+[![Build Status](https://travis-ci.org/Txuritan/EiraIRC.svg?branch=master)](https://travis-ci.org/Txuritan/EiraIRC)
+
+=======
+
 Minecraft Mod. On a Minecraft client it acts like any other IRC client, on the server it turns into a bridge-bot. Configuration is highly customizable and the mod includes a few special features such as name colors, Twitch chat and screenshot upload.
 
 ##Useful Links
