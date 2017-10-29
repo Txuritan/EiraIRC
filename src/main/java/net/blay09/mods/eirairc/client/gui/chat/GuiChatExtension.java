@@ -154,10 +154,10 @@ public class GuiChatExtension {
         String terminalChannel = chatSession.getChatTarget() != null ? (chatSession.getChatTarget().getName() + ": ") : null;
         if (terminalStyleInput && terminalChannel != null) {
             int terminalChannelWidth = parentScreen.mc.fontRenderer.getStringWidth(terminalChannel);
-            inputField.xPosition = 4 + terminalChannelWidth;
+            inputField.x = 4 + terminalChannelWidth;
             inputField.width = parentScreen.width - 4 - terminalChannelWidth;
         } else {
-            inputField.xPosition = 4;
+            inputField.x = 4;
             inputField.width = parentScreen.width - 4;
         }
     }
@@ -166,7 +166,7 @@ public class GuiChatExtension {
         boolean terminalStyleInput = ClientGlobalConfig.terminalStyleInput.get();
         String terminalChannel = chatSession.getChatTarget() != null ? (chatSession.getChatTarget().getName() + ": ") : null;
         if (terminalStyleInput && terminalChannel != null) {
-            parentScreen.mc.fontRenderer.drawString(terminalChannel, 4, inputField.yPosition, 14737632);
+            parentScreen.mc.fontRenderer.drawString(terminalChannel, 4, inputField.y, 14737632);
         }
         if (!ClientGlobalConfig.disableChatToggle.get() && !ClientGlobalConfig.clientBridge.get()) {
             IRCContext target = chatSession.getChatTarget();

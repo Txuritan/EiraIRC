@@ -30,7 +30,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.CommandEvent;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.player.AchievementEvent;
+//import net.minecraftforge.event.entity.player.AchievementEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -371,8 +371,8 @@ public class MCEventHandler {
         }
     }
 
-    @SubscribeEvent
-    public void onAchievement(AchievementEvent event) {
+    /*@SubscribeEvent
+    public void onAchievement( event) {
         if (((EntityPlayerMP) event.getEntityPlayer()).getStatFile().hasAchievementUnlocked(event.getAchievement())) {
             // This is necessary because the Achievement event fires even if an achievement is already unlocked.
             return;
@@ -397,7 +397,7 @@ public class MCEventHandler {
                 }
             }
         }
-    }
+    }*/
 
     @SubscribeEvent
     public void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent event) {

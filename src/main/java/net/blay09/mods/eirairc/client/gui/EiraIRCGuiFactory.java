@@ -13,18 +13,28 @@ public class EiraIRCGuiFactory implements IModGuiFactory {
     }
 
     @Override
+    public boolean hasConfigGui() {
+        return false;
+    }
+
+    @Override
+    public GuiScreen createConfigGui(GuiScreen parentScreen) {
+        return new GuiEiraIRCConfig(parentScreen);
+    }
+
+    /*@Override
     public Class<? extends GuiScreen> mainConfigGuiClass() {
         return GuiEiraIRCConfig.class;
-    }
+    }*/
 
     @Override
     public Set<RuntimeOptionCategoryElement> runtimeGuiCategories() {
         return null;
     }
 
-    @Override
+    /*@Override
     public RuntimeOptionGuiHandler getHandlerFor(RuntimeOptionCategoryElement element) {
         return null;
-    }
+    }*/
 
 }

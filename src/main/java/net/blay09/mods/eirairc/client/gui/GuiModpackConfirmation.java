@@ -53,7 +53,7 @@ public class GuiModpackConfirmation extends EiraGuiScreen {
         btnDisable = new GuiButton(1, width / 2 + 10, height / 2 + 80, 150, 20, "\u00a7cDisable this feature");
         buttonList.add(btnDisable);
         chkDontShowAgain = new GuiCheckBox(2, width / 2, height / 2 + 50, " Don't show this again", LocalConfig.disableModpackConfirmation.get());
-        chkDontShowAgain.xPosition -= chkDontShowAgain.getButtonWidth() / 2;
+        chkDontShowAgain.x -= chkDontShowAgain.getButtonWidth() / 2;
         buttonList.add(chkDontShowAgain);
 
         allowSideClickClose = false;

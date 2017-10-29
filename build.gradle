@@ -7,7 +7,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
@@ -18,7 +18,7 @@ def MAVEN_REPO = System.getenv("MAVEN_REPO") ?: ""
 def MAVEN_USERNAME = System.getenv("MAVEN_USERNAME") ?: ""
 def MAVEN_PASSWORD = System.getenv("MAVEN_PASSWORD") ?: ""
 
-version = "5.0.1"
+version = "5.0.3"
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 group = "net.blay09.mods"
@@ -26,11 +26,13 @@ archivesBaseName = "eirairc"
 
 minecraft {
     //version = "1.8.9-11.15.0.1684"
-    version = "1.11.2-13.20.0.2228"
+    //version = "1.11.2-13.20.0.2228"
+    version = "1.12.2-14.23.0.2515"
     runDir = "run"
     
     //mappings = "stable_20"
-    mappings = 'snapshot_20170301'
+    //mappings = 'snapshot_20170301'
+    mappings = "snapshot_20171003"
 }
 
 processResources
@@ -64,9 +66,9 @@ repositories {
 }
 
 dependencies {
-    deobfCompile 'net.blay09.mods:EiraMoticons_1.11:5.2.1'
-    deobfCompile 'us.dynmap:DynmapCoreAPI:2.4'
-    deobfCompile name: 'mod-tabbychat-2-2.2.1-mc1.11.2'
+    deobfCompile 'net.blay09.mods:EiraMoticons_1.12:6.3.4'
+    deobfCompile 'us.dynmap:DynmapCoreAPI:2.5'
+    deobfCompile name: 'mod-tabbychat-2.3.3-mc1.12.2'
 }
 
 jar {

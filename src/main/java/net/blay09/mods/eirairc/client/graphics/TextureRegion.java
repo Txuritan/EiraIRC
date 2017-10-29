@@ -1,8 +1,8 @@
 package net.blay09.mods.eirairc.client.graphics;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 
@@ -68,7 +68,7 @@ public class TextureRegion {
         float v2 = (float) (regionY + regionHeight) / (float) TEXTURE_HEIGHT;
 
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer renderer = tessellator.getBuffer();
+        BufferBuilder renderer = tessellator.getBuffer();
         renderer.begin(7, DefaultVertexFormats.POSITION_TEX);
         renderer.pos(x, y + height, 0).tex(u, v2).endVertex();
         renderer.pos(x + width, y + height, 0).tex(u2, v2).endVertex();

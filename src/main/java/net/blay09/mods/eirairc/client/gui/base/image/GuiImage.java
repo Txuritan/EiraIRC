@@ -1,8 +1,8 @@
 package net.blay09.mods.eirairc.client.gui.base.image;
 
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
@@ -59,7 +59,7 @@ public abstract class GuiImage {
 
         GlStateManager.bindTexture(textureId);
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer renderer = tessellator.getBuffer();
+        BufferBuilder renderer = tessellator.getBuffer();
         renderer.begin(7, DefaultVertexFormats.POSITION_TEX);
         renderer.pos(renderX, renderY + renderHeight, zLevel).tex(0, 1).endVertex();
         renderer.pos(renderX + renderWidth, renderY + renderHeight, zLevel).tex(1, 1).endVertex();

@@ -42,7 +42,7 @@ public class GuiImageButton extends GuiButton {
     }
 
     @Override
-    public void drawButton(Minecraft mc, int mouseX, int mouseY) {
+    public void drawButton(Minecraft mc, int mouseX, int mouseY, float partial) {
         if (this.visible) {
             // Fade button alpha in or out
             if (fadeMode > 0) {
@@ -59,7 +59,7 @@ public class GuiImageButton extends GuiButton {
             // Render the button with fade alpha and hover effect
             boolean hovered = false;
             if (enabled) {
-                if (mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height) {
+                if (mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height) {
                     GL11.glColor4f(1f, 1f, 1f, 1f * alphaFade);
                     hovered = true;
                 } else {
@@ -72,7 +72,7 @@ public class GuiImageButton extends GuiButton {
                 GL11.glPushMatrix();
                 GL11.glTranslatef(0.5f, 0.5f, 0.5f);
             }
-            region.draw(xPosition, yPosition);
+            region.draw(x, y);
             if (hovered) {
                 GL11.glPopMatrix();
             }
@@ -84,7 +84,7 @@ public class GuiImageButton extends GuiButton {
         return (enabled && visible && isInside(mouseX, mouseY));
     }
 
-    public boolean isInside(int x, int y) {
-        return (x >= xPosition && y >= yPosition && x < xPosition + width && y < yPosition + height);
+    public boolean isInside(int px, int py) {
+        return (px >= x && py >= y && px < x + width && py < y + height);
     }
 }

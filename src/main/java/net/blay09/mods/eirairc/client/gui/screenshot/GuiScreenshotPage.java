@@ -27,16 +27,16 @@ public abstract class GuiScreenshotPage extends GuiButton {
 
     @Override
     public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
-        if (enabled && visible && mouseX >= xPosition && mouseX < xPosition + width - 8 && mouseY >= yPosition && mouseY < yPosition + height) {
+        if (enabled && visible && mouseX >= x && mouseX < x + width - 8 && mouseY >= y && mouseY < y + height) {
             onClick();
         }
         return false;
     }
 
     @Override
-    public void drawButton(Minecraft mc, int mouseX, int mouseY) {
+    public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
         boolean hovered = false;
-        if (mouseX >= xPosition && mouseX < xPosition + width - 8 && mouseY >= yPosition && mouseY < yPosition + height) {
+        if (mouseX >= x && mouseX < x + width - 8 && mouseY >= y && mouseY < y + height) {
             hovered = true;
         }
         if (active) {
@@ -45,10 +45,10 @@ public abstract class GuiScreenshotPage extends GuiButton {
             GL11.glColor4f(0f, 0f, 0f, 1f);
         }
         GL11.glEnable(GL11.GL_BLEND);
-        regionContent.draw(xPosition, yPosition, width - regionRight.getRegionWidth(), regionContent.getRegionHeight());
-        regionRight.draw(xPosition + width - regionRight.getRegionWidth(), yPosition);
+        regionContent.draw(x, y, width - regionRight.getRegionWidth(), regionContent.getRegionHeight());
+        regionRight.draw(x + width - regionRight.getRegionWidth(), y);
         GL11.glDisable(GL11.GL_BLEND);
-        drawString(mc.fontRenderer, displayString, xPosition + regionRight.getRegionWidth() / 2, yPosition + (height - 8) / 2, hovered ? -12345678 : Globals.TEXT_COLOR);
+        drawString(mc.fontRenderer, displayString, x + regionRight.getRegionWidth() / 2, y + (height - 8) / 2, hovered ? -12345678 : Globals.TEXT_COLOR);
     }
 
     public boolean isActive() {

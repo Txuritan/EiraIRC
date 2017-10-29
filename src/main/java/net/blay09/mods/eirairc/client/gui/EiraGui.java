@@ -2,8 +2,8 @@ package net.blay09.mods.eirairc.client.gui;
 
 import net.blay09.mods.eirairc.client.graphics.TextureAtlas;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.crash.CrashReport;
@@ -30,7 +30,7 @@ public class EiraGui {
         float v2 = (float) (texCoordY + regionHeight) / (float) texHeight;
 
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer renderer = tessellator.getBuffer();
+        BufferBuilder renderer = tessellator.getBuffer();
         renderer.begin(7, DefaultVertexFormats.POSITION_TEX);
         renderer.pos(x, y + height, zLevel).tex(u, v2).endVertex();
         renderer.pos(x + width, y + height, zLevel).tex(u2, v2).endVertex();

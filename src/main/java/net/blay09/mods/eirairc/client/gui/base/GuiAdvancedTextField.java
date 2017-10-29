@@ -45,11 +45,11 @@ public class GuiAdvancedTextField extends GuiTextField {
     }
 
     @Override
-    public void mouseClicked(int mouseX, int mouseY, int button) {
+    public boolean mouseClicked(int mouseX, int mouseY, int button) {
         if (emptyOnRightClick && button == 1) {
             setText("");
         }
-        super.mouseClicked(mouseX, mouseY, button);
+        return super.mouseClicked(mouseX, mouseY, button);
     }
 
     @Override
