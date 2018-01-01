@@ -54,11 +54,16 @@ public class Utils {
                 Minecraft.getMinecraft().player.sendMessage(chatComponent);
             }
         }*/
-        
+
         try {
+            MinecraftServer minecraftServer = FMLCommonHandler.instance().getMinecraftServerInstance().getServer();
+            if (minecraftServer != null && !minecraftServer.isSinglePlayer()) {
+                minecraftServer.sendMessage(translateToDefault(chatComponent));
+            } else {
                 if (Minecraft.getMinecraft().player != null) {
                     Minecraft.getMinecraft().player.sendMessage(chatComponent);
                 }
+            }
         } catch (NullPointerException npe) {
             EiraIRC.logger.error("Utils...getMinecraft() threw NullPointerException", npe);
         }
@@ -199,7 +204,7 @@ public class Utils {
     public static void openDirectory(File dir) {
         if (Util.getOSType() == Util.EnumOS.OSX) {
             try {
-                Runtime.getRuntime().exec(new String[]{ "/usr/bin/open", dir.getAbsolutePath() });
+                Runtime.getRuntime().exec(new String[]{"/usr/bin/open", dir.getAbsolutePath()});
                 return;
             } catch (IOException ignored) {
             }
@@ -331,10 +336,10 @@ public class Utils {
                 }
                 return ArrayUtils.toPrimitive(portList.toArray(new Integer[portList.size()]));
             } catch (NumberFormatException e) {
-                return new int[]{ defaultPort };
+                return new int[]{defaultPort};
             }
         }
-        return new int[]{ defaultPort };
+        return new int[]{defaultPort};
     }
 
     @Deprecated
