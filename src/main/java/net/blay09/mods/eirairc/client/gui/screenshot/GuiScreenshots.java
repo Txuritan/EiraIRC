@@ -364,7 +364,7 @@ public class GuiScreenshots extends EiraGuiScreen implements GuiYesNoCallback {
                 setFavoriteButtonState(currentScreenshot.isFavorited());
             }
         } else if (button == btnZoom) {
-            if (!isUploading) {
+            if (!isUploading && currentScreenshot != null) {
                 mc.displayGuiScreen(new GuiScreenshotBigPreview(this, currentScreenshot));
             }
         }
