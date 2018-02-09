@@ -2,6 +2,7 @@
 
 package net.blay09.mods.eirairc.util;
 
+import com.typesafe.config.ConfigException;
 import net.blay09.mods.eirairc.ConnectionManager;
 import net.blay09.mods.eirairc.EiraIRC;
 import net.blay09.mods.eirairc.api.EiraIRCAPI;
@@ -9,16 +10,15 @@ import net.blay09.mods.eirairc.api.irc.IRCChannel;
 import net.blay09.mods.eirairc.api.irc.IRCConnection;
 import net.blay09.mods.eirairc.api.irc.IRCContext;
 import net.blay09.mods.eirairc.api.irc.IRCUser;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.Util;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.Sys;
@@ -47,25 +47,16 @@ public class Utils {
     }
 
     public static void addMessageToChat(ITextComponent chatComponent) {
-        /*if (FMLCommonHandler.instance().getMinecraftServerInstance().getServer() != null && !FMLCommonHandler.instance().getMinecraftServerInstance().getServer().isSinglePlayer()) {
-            FMLCommonHandler.instance().getMinecraftServerInstance().getServer().sendMessage(translateToDefault(chatComponent));
-        } else {
-            if (Minecraft.getMinecraft().player != null) {
-                Minecraft.getMinecraft().player.sendMessage(chatComponent);
-            }
-        }*/
-
         try {
-            MinecraftServer minecraftServer = FMLCommonHandler.instance().getMinecraftServerInstance().getServer();
-            if (minecraftServer != null && !minecraftServer.isSinglePlayer()) {
-                minecraftServer.sendMessage(translateToDefault(chatComponent));
-            } else {
-                if (Minecraft.getMinecraft().player != null) {
-                    Minecraft.getMinecraft().player.sendMessage(chatComponent);
+            if (FMLCommonHandler.instance().getMinecraftServerInstance().getServer() != null && !FMLCommonHandler.instance().getMinecraftServerInstance().getServer().isSinglePlayer()) {
+                FMLCommonHandler.instance().getMinecraftServerInstance().getServer().getPlayerList().sendMessage(chatComponent);
+            } else if (FMLClientHandler.instance().getClient() != null) {
+                if (FMLClientHandler.instance().getClient().player != null) {
+                    FMLClientHandler.instance().getClient().player.sendMessage(chatComponent);
                 }
             }
-        } catch (NullPointerException npe) {
-            EiraIRC.logger.error("Utils...getMinecraft() threw NullPointerException", npe);
+        } catch (NullPointerException e) {
+            EiraIRC.logger.error("Utils.addMessageToChat()", e);
         }
     }
 
@@ -86,7 +77,7 @@ public class Utils {
     }
 
     public static String getServerAddress() {
-        ServerData serverData = Minecraft.getMinecraft().getCurrentServerData();
+        ServerData serverData = net.minecraft.client.Minecraft.getMinecraft().getCurrentServerData();
         if (serverData != null) {
             return serverData.serverIP;
         }
